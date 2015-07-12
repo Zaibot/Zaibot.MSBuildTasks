@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Target Name="AfterBuild">
         <Exec WorkingDirectory="$(TargetDir)"
-              Command="$(SolutionDir).nuget\nuget pack $(ProjectDir)MSBuildTasks.nuspec -Version $(ProductVersionAnnotated) -OutputDir $(TargetDir) -Properties TargetDir=$(TargetDir);SolutionDir=$(SolutionDir)" />
+              Command="$(SolutionDir).nuget\nuget pack $(ProjectDir)MSBuildTasks.nuspec -Version $(ProductVersionAnnotated) -NoPackageAnalysis -OutputDir $(TargetDir) -Properties TargetDir=$(TargetDir);ProjectDir=$(ProjectDir);SolutionDir=$(SolutionDir)" />
     </Target>
     <Target Name="PublishNuGet" AfterTargets="AfterBuild" Condition="'$(MyGetApiKey)'!=''">
         <Exec WorkingDirectory="$(TargetDir)"

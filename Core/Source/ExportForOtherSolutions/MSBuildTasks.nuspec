@@ -14,6 +14,8 @@
     </metadata>
     <files>
         <file src="$SolutionDir$Includes\Zaibot.MSBuildTasks.targets" target="tools" />
+        <file src="$ProjectDir$Init.ps1" target="tools" />
+        <file src="$ProjectDir$MSBuild.psm1" target="tools" />
         <file src="$TargetDir$Zaibot.MSBuildTasks.dll" target="tools" />
         <file src="$TargetDir$Zaibot.MSBuildTasks.pdb" target="tools" />
     </files>

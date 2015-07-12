@@ -51,6 +51,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Init.ps1" />
+    <None Include="MSBuild.psm1" />
     <None Include="NuGet.nuproj" />
     <None Include="MSBuildTasks.nuspec" />
   </ItemGroup>
