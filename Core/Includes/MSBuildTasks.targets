@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)'==''">$(SolutionDir)Output\</ZaibotMSBuildTasksPath>
+        <ZaibotMSBuildTasksLib>$([MSBUILD]::Unescape($(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll))</ZaibotMSBuildTasksLib>
+    </PropertyGroup>
+    
+    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="Zaibot.MSBuildTasks.GitShortRevTask" />
+
+    <Target Name="AfterBuild">
+        <GitShortRevTask Revision="GitRevision" />
+        <GitVersionTagTask Major="GitVersionMajor" Minor="GitVersionMinor" Revision="GitVersionRevision" Build="GitVersionBuild" Tag="GitVersionTag" />
+        <GitToolCommitCountTask Since="$(GitVersionTag)" Count="GitCommitSinceVersion" />
+
+        <PropertyGroup>
+            <ProductVersionMajor>0</ProductVersionMajor>
+            <ProductVersionMinor>1</ProductVersionMinor>
+            <ProductVersionRevision>0</ProductVersionRevision>
+            <ProductVersion>0.1.0.2</ProductVersion>
+            <GitTag>unknown</GitTag>
+        </PropertyGroup>
+
+        <AssemblyVersionTask  File="$(SolutionDir)Includes\StateLogic_Version.cs" />
+    </Target>
+</Project>
