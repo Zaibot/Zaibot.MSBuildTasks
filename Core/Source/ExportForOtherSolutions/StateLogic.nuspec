@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Zaibot.MSBuildTasks</id>
+        <version>$version$</version>
+        <authors>Tobias de Groen, Zaibot Programs</authors>
+        <description></description>
+        <releaseNotes></releaseNotes>
+        <language>en-US</language>
+        <tags>.NET MSBuild</tags>
+        <projectUrl>http://www.zaibot.net/msbuildtasks/</projectUrl>
+        <licenseUrl>http://www.zaibot.net/msbuildtasks/license</licenseUrl>
+    </metadata>
+    <files>
+        <file src="$TargetDir$Zaibot.MSBuildTasks.dll" target="lib\net45" />
+        <file src="$TargetDir$Zaibot.MSBuildTasks.pdb" target="lib\net45" />
+    </files>
+</package>
