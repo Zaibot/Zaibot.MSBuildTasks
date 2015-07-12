@@ -4,14 +4,42 @@
         <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)'==''">$(SolutionDir)Output\</ZaibotMSBuildTasksPath>
         <ZaibotMSBuildTasksLib>$([MSBUILD]::Unescape($(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll))</ZaibotMSBuildTasksLib>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <GitRevision>unknown</GitRevision>
+        <GitVersionMajor>unknown</GitVersionMajor>
+        <GitVersionMinor>unknown</GitVersionMinor>
+        <GitVersionRevision>unknown</GitVersionRevision>
+        <GitVersionBuild>unknown</GitVersionBuild>
+        <GitVersionTag>unknown</GitVersionTag>
+        <GitCommitSinceVersion>unknown</GitCommitSinceVersion>
+    </PropertyGroup>
     
-    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="Zaibot.MSBuildTasks.GitShortRevTask" />
+    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitShortRevTask" />
+    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitVersionTagTask" />
+    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitToolCommitCountTask" />
+    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="AssemblyVersionTask" />
 
     <Target Name="AfterBuild">
-        <GitShortRevTask Revision="GitRevision" />
-        <GitVersionTagTask Major="GitVersionMajor" Minor="GitVersionMinor" Revision="GitVersionRevision" Build="GitVersionBuild" Tag="GitVersionTag" />
-        <GitToolCommitCountTask Since="$(GitVersionTag)" Count="GitCommitSinceVersion" />
+        <GitShortRevTask LocalPath="$(SolutionDir)">
+            <Output TaskParameter="Revision" PropertyName="GitRevision" />
+        </GitShortRevTask>
+        <GitVersionTagTask LocalPath="$(SolutionDir)">
+            <Output TaskParameter="Major" PropertyName="GitVersionMajor" />
+            <Output TaskParameter="Minor" PropertyName="GitVersionMinor" />
+            <Output TaskParameter="Revision" PropertyName="GitVersionRevision" />
+            <Output TaskParameter="Build" PropertyName="GitVersionBuild" />
+            <Output TaskParameter="Tag" PropertyName="GitVersionTag" />
+            <Output TaskParameter="Annotation" PropertyName="GitVersionAnnotation" />
+        </GitVersionTagTask>
+        <GitToolCommitCountTask LocalPath="$(SolutionDir)" Since="$(GitVersionTag)">
+            <Output TaskParameter="Count" PropertyName="GitCommitSinceVersion" />
+        </GitToolCommitCountTask>
 
+        <Message Text="GIT Revision: $(GitRevision)" />
+        <Message Text="GIT Version: $(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitVersionBuild)-$(GitVersionAnnotation)" />
+        <Message Text="GIT Following Commits: $(GitCommitSinceVersion)" />
+        
         <PropertyGroup>
             <ProductVersionMajor>0</ProductVersionMajor>
             <ProductVersionMinor>1</ProductVersionMinor>
@@ -20,6 +48,6 @@
             <GitTag>unknown</GitTag>
         </PropertyGroup>
 
-        <AssemblyVersionTask  File="$(SolutionDir)Includes\StateLogic_Version.cs" />
+        <AssemblyVersionTask File="$(SolutionDir)Includes\MSBuildTasks_Version.cs" Version="$(GitVersionMajor).$(GitVersionMinor)" FileVersion="$(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitVersionBuild)" InfoVersion="$(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitVersionBuild) ($(GitRevision))" />
     </Target>
 </Project>

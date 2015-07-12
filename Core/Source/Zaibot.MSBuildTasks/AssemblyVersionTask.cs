@@ -32,9 +32,9 @@ namespace Zaibot.MSBuildTasks
                 + "[assembly: AssemblyFileVersion(\"{1}\")]\r\n"
                 + "[assembly: AssemblyInformationalVersion(\"{2}\")]\r\n";
 
-            var assVersion = Version;
-            var assFileVersion = FileVersion;
-            var assInfoVersion = InfoVersion;
+            var assVersion = this.Version;
+            var assFileVersion = this.FileVersion;
+            var assInfoVersion = this.InfoVersion;
 
             System.IO.File.WriteAllText(this.File, string.Format(format, assVersion, assFileVersion, assInfoVersion));
             return true;

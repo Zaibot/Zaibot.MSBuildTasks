@@ -1,5 +1,21 @@
+// ----------------------------------------
+// 
+//   Core
+//   Copyright (c) 2015 Zaibot Programs
+//   
+//   Creation: 2015-07-12
+//     Author: Tobias de Groen
+//   Location: Arnhem, The Netherlands
+// 
+//    Website: www.zaibot.net
+//    Contact: admin@zaibot.net
+//             +31 (6) 3388 3156
+// 
+// ----------------------------------------
+
 using System;
 using System.IO;
+using System.Security;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Microsoft.Win32;
@@ -12,13 +28,14 @@ namespace Zaibot.MSBuildTasks
         {
             get { return ToolPathUtil.MakeToolName("git"); }
         }
+
         private string FindToolPath(string toolName)
         {
-            string toolPath =
+            var toolPath =
                 ToolPathUtil.FindInRegistry(toolName) ??
                 ToolPathUtil.FindInPath(toolName) ??
                 ToolPathUtil.FindInProgramFiles(toolName, @"Git\bin") ??
-                ToolPathUtil.FindInLocalPath(toolName, LocalPath);
+                ToolPathUtil.FindInLocalPath(toolName, this.LocalPath);
 
             if (toolPath == null)
             {
@@ -36,6 +53,14 @@ namespace Zaibot.MSBuildTasks
             return Path.Combine(this.ToolPath, this.ToolName);
         }
 
+        protected override string GetWorkingDirectory()
+        {
+            if (string.IsNullOrEmpty(LocalPath))
+                return base.GetWorkingDirectory();
+
+            return LocalPath;
+        }
+
         protected override void LogEventsFromTextOutput(string singleLine, MessageImportance messageImportance)
         {
             var flag = messageImportance == this.StandardErrorLoggingImportance;
@@ -50,6 +75,7 @@ namespace Zaibot.MSBuildTasks
 
         protected abstract void HandleOutput(string singleLine);
     }
+
     internal static class ToolPathUtil
     {
         public static bool SafeFileExists(string path, string toolName)
@@ -59,40 +85,48 @@ namespace Zaibot.MSBuildTasks
 
         public static bool SafeFileExists(string file)
         {
-            try { return File.Exists(file); }
-            catch { } // eat exception
+            try
+            {
+                return File.Exists(file);
+            }
+            catch
+            {
+            } // eat exception
 
             return false;
         }
 
         public static string MakeToolName(string name)
         {
-            return (Environment.OSVersion.Platform == PlatformID.Unix) ?
-                name : name + ".exe";
+            return (Environment.OSVersion.Platform == PlatformID.Unix)
+                ? name
+                : name + ".exe";
         }
 
         public static string FindInRegistry(string toolName)
         {
             try
             {
-                RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + toolName, false);
+                var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\" + toolName, false);
                 if (key != null)
                 {
-                    string possiblePath = key.GetValue(null) as string;
+                    var possiblePath = key.GetValue(null) as string;
                     if (SafeFileExists(possiblePath))
                         return Path.GetDirectoryName(possiblePath);
                 }
             }
-            catch (System.Security.SecurityException) { }
+            catch (SecurityException)
+            {
+            }
 
             return null;
         }
 
         public static string FindInPath(string toolName)
         {
-            string pathEnvironmentVariable = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
-            string[] paths = pathEnvironmentVariable.Split(new[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string path in paths)
+            var pathEnvironmentVariable = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
+            var paths = pathEnvironmentVariable.Split(new[] {Path.PathSeparator}, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var path in paths)
             {
                 if (SafeFileExists(path, toolName))
                 {
@@ -105,9 +139,9 @@ namespace Zaibot.MSBuildTasks
 
         public static string FindInProgramFiles(string toolName, params string[] commonLocations)
         {
-            foreach (string location in commonLocations)
+            foreach (var location in commonLocations)
             {
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), location);
+                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), location);
                 if (SafeFileExists(path, toolName))
                 {
                     return path;
@@ -122,7 +156,7 @@ namespace Zaibot.MSBuildTasks
             if (localPath == null)
                 return null;
 
-            string path = new DirectoryInfo(localPath).FullName;
+            var path = new DirectoryInfo(localPath).FullName;
             if (SafeFileExists(localPath, toolName))
             {
                 return path;

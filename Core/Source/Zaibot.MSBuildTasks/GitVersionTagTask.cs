@@ -1,3 +1,18 @@
+// ----------------------------------------
+// 
+//   Core
+//   Copyright (c) 2015 Zaibot Programs
+//   
+//   Creation: 2015-07-12
+//     Author: Tobias de Groen
+//   Location: Arnhem, The Netherlands
+// 
+//    Website: www.zaibot.net
+//    Contact: admin@zaibot.net
+//             +31 (6) 3388 3156
+// 
+// ----------------------------------------
+
 using System.Text.RegularExpressions;
 using Microsoft.Build.Framework;
 
@@ -20,6 +35,9 @@ namespace Zaibot.MSBuildTasks
         [Output]
         public string Tag { get; set; }
 
+        [Output]
+        public string Annotation { get; set; }
+
         protected override string GenerateCommandLineCommands()
         {
             return "describe --always --tags";
@@ -27,7 +45,7 @@ namespace Zaibot.MSBuildTasks
 
         protected override void HandleOutput(string singleLine)
         {
-            var versionRegex = new Regex(@"v(?<major>\d+)\.(?<minor>\d+)(\.(?<revision>\d+)(\.(?<build>\d+))?)?", RegexOptions.Compiled | RegexOptions.Singleline);
+            var versionRegex = new Regex(@"v(?<major>\d+)\.(?<minor>\d+)(\.(?<revision>\d+)(\.(?<build>\d+))?)?(?<annotation>.*$)?", RegexOptions.Compiled | RegexOptions.Singleline);
             var m = versionRegex.Match(singleLine);
             if (m.Success)
             {
@@ -35,6 +53,7 @@ namespace Zaibot.MSBuildTasks
                 this.Minor = m.Groups["minor"].Value;
                 this.Revision = m.Groups["revision"].Value;
                 this.Build = m.Groups["build"].Value;
+                this.Annotation = m.Groups["annotation"].Value;
             }
 
             this.Tag = singleLine.Trim();
