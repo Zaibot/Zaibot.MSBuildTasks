@@ -48,11 +48,14 @@
       <Link>Properties\MSBuildTasks_Version.cs</Link>
     </Compile>
     <Compile Include="AssemblyVersionTask.cs" />
+    <Compile Include="GitDescribeTask.cs" />
     <Compile Include="GitShortRevTask.cs" />
     <Compile Include="GitToolBase.cs" />
     <Compile Include="GitToolCommitCountTask.cs" />
     <Compile Include="GitVersionTagTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolPathUtil.cs" />
+    <Compile Include="VersionTextTask.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

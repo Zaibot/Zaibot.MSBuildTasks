@@ -17,19 +17,19 @@ using Microsoft.Build.Framework;
 
 namespace Zaibot.MSBuildTasks
 {
-    public class GitShortRevTask : GitToolBase
+    public class GitDescribeTask : GitToolBase
     {
         [Output]
-        public string Revision { get; set; }
+        public string Text { get; set; }
 
         protected override string GenerateCommandLineCommands()
         {
-            return "rev-parse --short HEAD";
+            return "describe --tags";
         }
 
         protected override void HandleOutput(string singleLine)
         {
-            this.Revision = singleLine.Trim();
+            this.Text = singleLine.Trim();
         }
     }
 }

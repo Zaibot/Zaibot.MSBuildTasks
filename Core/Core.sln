@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportForOtherSolutions", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Includes", "Includes", "{DE6151EF-5FED-4431-96E1-A5BD23CA3F54}"
 	ProjectSection(SolutionItems) = preProject
-		Includes\MSBuildTasks.targets = Includes\MSBuildTasks.targets
 		Includes\MSBuildTasks_Product.cs = Includes\MSBuildTasks_Product.cs
 		Includes\MSBuildTasks_Version.cs = Includes\MSBuildTasks_Version.cs
+		Includes\Zaibot.MSBuildTasks.targets = Includes\Zaibot.MSBuildTasks.targets
 	EndProjectSection
 EndProject
 Global

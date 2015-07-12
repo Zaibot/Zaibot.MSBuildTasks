@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Zaibot.MSBuildTasks</id>
@@ -12,8 +13,8 @@
         <licenseUrl>http://www.zaibot.net/msbuildtasks/license</licenseUrl>
     </metadata>
     <files>
-        <file src="$SolutionDir$Includes\MSBuildTasks.targets" target="lib\net45" />
-        <file src="$TargetDir$Zaibot.MSBuildTasks.dll" target="lib\net45" />
-        <file src="$TargetDir$Zaibot.MSBuildTasks.pdb" target="lib\net45" />
+        <file src="$SolutionDir$Includes\Zaibot.MSBuildTasks.targets" target="tools" />
+        <file src="$TargetDir$Zaibot.MSBuildTasks.dll" target="tools" />
+        <file src="$TargetDir$Zaibot.MSBuildTasks.pdb" target="tools" />
     </files>
 </package>

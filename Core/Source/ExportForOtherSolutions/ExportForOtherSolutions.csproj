@@ -55,7 +55,7 @@
     <None Include="MSBuildTasks.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\Includes\MSBuildTasks.targets" />
+  <Import Project="$(SolutionDir)\Includes\Zaibot.MSBuildTasks.targets" />
   <Import Project="NuGet.nuproj" />
   <PropertyGroup>
     <PostBuildEvent>del /s "$(TargetDir)ExportForOtherSolutions.*"</PostBuildEvent>

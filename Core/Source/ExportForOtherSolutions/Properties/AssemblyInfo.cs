@@ -1,9 +1,9 @@
 ﻿// ----------------------------------------
 // 
-//   StateLogic
+//   Core
 //   Copyright (c) 2015 Zaibot Programs
 //   
-//   Creation: 2015-05-31
+//   Creation: 2015-07-12
 //     Author: Tobias de Groen
 //   Location: Arnhem, The Netherlands
 // 

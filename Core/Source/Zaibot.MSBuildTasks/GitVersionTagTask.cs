@@ -13,47 +13,11 @@
 // 
 // ----------------------------------------
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 
 namespace Zaibot.MSBuildTasks
 {
-    public class VersionTextTask : Task
-    {
-        public string Major { get; set; }
-        public string Minor { get; set; }
-        public string Revision { get; set; }
-        public string Build { get; set; }
-        public string Commit { get; set; }
-        public string Annotation { get; set; }
-        public string ChangedSinceTag { get; set; }
-
-        [Output]
-        public string Short { get; set; }
-        [Output]
-        public string Long { get; set; }
-        [Output]
-        public string Descriptive { get; set; }
-
-        public override bool Execute()
-        {
-            Short = Major + "." + Minor;
-            Long = Major + "." + Minor;
-            Long = Major + "." + Minor + "." + Revision + "." + Build;
-
-            var numbers = new List<string>() { Major, Minor, Revision, Build };
-
-            Descriptive = string.Join(".", numbers) 
-                + (string.IsNullOrEmpty(Annotation) ? "" : "-" + Annotation)
-                + (ChangedSinceTag =="False" ? "" : string.Format(".{0}", this.Commit));
-
-            return true;
-        }
-    }
-
     public class GitVersionTagTask : GitToolBase
     {
         [Output]
