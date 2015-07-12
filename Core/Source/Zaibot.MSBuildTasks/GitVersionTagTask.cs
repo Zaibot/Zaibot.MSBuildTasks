@@ -45,7 +45,7 @@ namespace Zaibot.MSBuildTasks
 
         protected override void HandleOutput(string singleLine)
         {
-            var versionRegex = new Regex(@"v(?<major>\d+)\.(?<minor>\d+)(\.(?<revision>\d+)(\.(?<build>\d+))?)?(\-(?<annotation>[^\-]+))?", RegexOptions.Compiled | RegexOptions.Singleline);
+            var versionRegex = new Regex(@"v(?<major>\d+)\.(?<minor>\d+)(\.(?<revision>\d+)(\.(?<build>\d+))?)?(\-(?<annotation>[^\d][^\-]+))?", RegexOptions.Compiled | RegexOptions.Singleline);
             var m = versionRegex.Match(singleLine);
             if (m.Success)
             {
