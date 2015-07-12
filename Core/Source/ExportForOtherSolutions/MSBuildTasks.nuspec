@@ -4,7 +4,7 @@
         <id>Zaibot.MSBuildTasks</id>
         <version>$version$</version>
         <authors>Tobias de Groen, Zaibot Programs</authors>
-        <description></description>
+        <description>Collection of tasks, usefull for automating builds.</description>
         <releaseNotes></releaseNotes>
         <language>en-US</language>
         <tags>.NET MSBuild</tags>
@@ -12,6 +12,7 @@
         <licenseUrl>http://www.zaibot.net/msbuildtasks/license</licenseUrl>
     </metadata>
     <files>
+        <file src="$SolutionDir$Includes\MSBuildTasks.targets" target="lib\net45" />
         <file src="$TargetDir$Zaibot.MSBuildTasks.dll" target="lib\net45" />
         <file src="$TargetDir$Zaibot.MSBuildTasks.pdb" target="lib\net45" />
     </files>

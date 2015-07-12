@@ -1,9 +1,9 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
-    <!--<Import Project="$(SolutionDir)Includes\StateLogic_Version.props" />-->
-    <!--<Target Name="AfterBuild">
-        <Exec WorkingDirectory="$(TargetDir)" Command="$(SolutionDir).nuget\nuget pack $(ProjectDir)StateLogic.nuspec -Version $(ProductVersion) -OutputDir $(TargetDir) -Properties TargetDir=$(TargetDir)" />
+    <Import Project="$(SolutionDir)Includes\MSBuildTasks.targets" />
+    <Target Name="AfterBuild">
+        <Exec WorkingDirectory="$(TargetDir)" Command="$(SolutionDir).nuget\nuget pack $(ProjectDir)MSBuildTasks.nuspec -Version $(ProductVersionLong) -OutputDir $(TargetDir) -Properties TargetDir=$(TargetDir);SolutionDir=$(SolutionDir)" />
     </Target>
     <Target Name="PublishNuGet" AfterTargets="AfterBuild" Condition="'$(MyGetApiKey)'!=''">
-        <Exec WorkingDirectory="$(TargetDir)" Command="$(SolutionDir).nuget\nuget push $(TargetDir)Zaibot.StateLogic.$(ProductVersion).nupkg $(MyGetApiKey) -Source https://www.myget.org/F/zaibot/api/v2/package" />
-    </Target>-->
+        <Exec WorkingDirectory="$(TargetDir)" Command="$(SolutionDir).nuget\nuget push $(TargetDir)Zaibot.MSBuildTasks.$(ProductVersionLong).nupkg $(MyGetApiKey) -Source https://www.myget.org/F/zaibot/api/v2/package" />
+    </Target>
 </Project>

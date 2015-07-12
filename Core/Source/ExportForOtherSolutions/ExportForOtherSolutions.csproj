@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NuGet.nuproj" />
-    <None Include="StateLogic.nuspec" />
+    <None Include="MSBuildTasks.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Includes\MSBuildTasks.targets" />
