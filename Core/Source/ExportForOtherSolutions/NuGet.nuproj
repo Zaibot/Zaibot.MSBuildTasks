@@ -1,9 +1,9 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
     <Import Project="$(SolutionDir)Includes\MSBuildTasks.targets" />
     <Target Name="AfterBuild">
-        <Exec WorkingDirectory="$(TargetDir)" Command="$(SolutionDir).nuget\nuget pack $(ProjectDir)MSBuildTasks.nuspec -Version $(ProductVersionLong) -OutputDir $(TargetDir) -Properties TargetDir=$(TargetDir);SolutionDir=$(SolutionDir)" />
+        <Exec WorkingDirectory="$(TargetDir)" Command="$(SolutionDir).nuget\nuget pack $(ProjectDir)MSBuildTasks.nuspec -Version $(ProductVersionAnnotated) -OutputDir $(TargetDir) -Properties TargetDir=$(TargetDir);SolutionDir=$(SolutionDir)" />
     </Target>
     <Target Name="PublishNuGet" AfterTargets="AfterBuild" Condition="'$(MyGetApiKey)'!=''">
-        <Exec WorkingDirectory="$(TargetDir)" Command="$(SolutionDir).nuget\nuget push $(TargetDir)Zaibot.MSBuildTasks.$(ProductVersionLong).nupkg $(MyGetApiKey) -Source https://www.myget.org/F/zaibot/api/v2/package" />
+        <Exec WorkingDirectory="$(TargetDir)" Command="$(SolutionDir).nuget\nuget push $(TargetDir)Zaibot.MSBuildTasks.$(ProductVersionAnnotated).nupkg $(MyGetApiKey) -Source https://www.myget.org/F/zaibot/api/v2/package" />
     </Target>
 </Project>

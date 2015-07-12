@@ -19,11 +19,6 @@ namespace Zaibot.MSBuildTasks
 {
     public class GitShortRevTask : GitToolBase
     {
-        protected override string ToolName
-        {
-            get { return "git.exe"; }
-        }
-
         [Output]
         public string Revision { get; set; }
 
@@ -35,6 +30,21 @@ namespace Zaibot.MSBuildTasks
         protected override void HandleOutput(string singleLine)
         {
             this.Revision = singleLine.Trim();
+        }
+    }
+    public class GitDescribeTask : GitToolBase
+    {
+        [Output]
+        public string Text { get; set; }
+
+        protected override string GenerateCommandLineCommands()
+        {
+            return "describe --tags";
+        }
+
+        protected override void HandleOutput(string singleLine)
+        {
+            this.Text = singleLine.Trim();
         }
     }
 }
