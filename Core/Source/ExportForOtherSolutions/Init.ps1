@@ -13,6 +13,7 @@ function Copy-MSBuildTasks($project) {
 	Write-Host "Copying Zaibot MSBuildTasks files to $tasksToolsPath"
 	Copy-Item "$toolsPath\Zaibot.MSBuildTasks.dll" $tasksToolsPath -Force | Out-Null
 	Copy-Item "$toolsPath\Zaibot.MSBuildTasks.targets" $tasksToolsPath -Force | Out-Null
+	Copy-Item "$toolsPath\Zaibot.MSBuildTasks.Readme.txt" $tasksToolsPath -Force | Out-Null
 
 	$buildFile = Join-Path $solutionDir "Build.proj"
 	
@@ -43,6 +44,9 @@ function Add-Solution-Folder($buildPath) {
 	$projectItems.AddFromFile($targetsPath)
 
 	$dllPath = [IO.Path]::GetFullPath( (Join-Path $buildPath "Zaibot.MSBuildTasks.dll") )
+	$projectItems.AddFromFile($dllPath)
+
+	$dllPath = [IO.Path]::GetFullPath( (Join-Path $buildPath "Zaibot.MSBuildTasks.Readme.txt") )
 	$projectItems.AddFromFile($dllPath)
 
 	#$projPath = [IO.Path]::GetFullPath( (Join-Path $buildPath "..\Build.proj") )

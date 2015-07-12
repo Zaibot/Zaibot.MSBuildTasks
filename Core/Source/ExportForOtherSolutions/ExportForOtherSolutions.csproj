@@ -56,6 +56,9 @@
     <None Include="NuGet.nuproj" />
     <None Include="MSBuildTasks.nuspec" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Zaibot.MSBuildTasks.Readme.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\Includes\Zaibot.MSBuildTasks.targets" />
   <Import Project="NuGet.nuproj" />

@@ -3,6 +3,7 @@
     <PropertyGroup>
         <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)'==''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
         <ZaibotMSBuildTasksLib>$([MSBUILD]::Unescape($(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll))</ZaibotMSBuildTasksLib>
+        <VersionFile Condition="'$(VersionFile)' == ''">$(SolutionDir)Includes\$(SolutionName)_Version.cs</VersionFile>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -84,8 +85,9 @@
         <Message Text="Product Version: $(ProductVersion)" />
         <Message Text="Product Version Annotated: $(ProductVersionAnnotated)" />
 
+        <Error Condition="!Exists('$(VersionFile)')" Text="The version file $(VersionFile) does not exist." />
         <AssemblyVersionTask
-            File="$(SolutionDir)Includes\MSBuildTasks_Version.cs"
+            File="$(VersionFile)"
             Version="$(ProductVersionShort)"
             FileVersion="$(ProductVersionLong)"
             InfoVersion="$(GitDescribe)" />
