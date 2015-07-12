@@ -14,6 +14,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Includes", "Includes", "{DE
 		Includes\Zaibot.MSBuildTasks.targets = Includes\Zaibot.MSBuildTasks.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F8970E7E-ABBB-44A5-BFE4-D1489B9A87AC}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F55F1DE2-7783-43AF-8B69-F768335EA00B}"
+	ProjectSection(SolutionItems) = preProject
+		.build\Zaibot.MSBuildTasks.dll = .build\Zaibot.MSBuildTasks.dll
+		.build\Zaibot.MSBuildTasks.Readme.txt = .build\Zaibot.MSBuildTasks.Readme.txt
+		.build\Zaibot.MSBuildTasks.targets = .build\Zaibot.MSBuildTasks.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
