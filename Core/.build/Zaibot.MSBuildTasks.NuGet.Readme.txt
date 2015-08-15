@@ -1,0 +1,9 @@
+﻿Import the target into the build by importing:
+  <Import Project="$(SolutionDir)\.build\Zaibot.MSBuildTasks.NuGet.targets" />
+
+On the build server/project assign MSBuild parameters:
+	NuGetSourceUrl = https://yournugetserver/path
+	NuGetSourceApiKey = YOUR-NUGET-API-KEY
+
+Optionally:
+	NuGetExe = Path to the nuget.exe

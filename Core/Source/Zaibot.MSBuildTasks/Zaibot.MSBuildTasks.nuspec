@@ -13,11 +13,11 @@
         <licenseUrl>http://www.zaibot.net/msbuildtasks/license</licenseUrl>
     </metadata>
     <files>
-        <file src="$SolutionDir$Includes\Zaibot.MSBuildTasks.targets" target="tools" />
-        <file src="$ProjectDir$Init.ps1" target="tools" />
-        <file src="$ProjectDir$MSBuild.psm1" target="tools" />
-        <file src="$ProjectDir$Zaibot.MSBuildTasks.Readme.txt" target="tools" />
-        <file src="$TargetDir$Zaibot.MSBuildTasks.dll" target="tools" />
-        <file src="$TargetDir$Zaibot.MSBuildTasks.pdb" target="tools" />
+      <file src="Init.ps1" target="tools" />
+      <file src="MSBuild.psm1" target="tools" />
+      <file src="Zaibot.MSBuildTasks.Readme.txt" target="tools" />
+      <file src="Zaibot.MSBuildTasks.dll" target="tools" />
+      <file src="Zaibot.MSBuildTasks.pdb" target="tools" />
+      <file src="Zaibot.MSBuildTasks.targets" target="tools" />
     </files>
 </package>
