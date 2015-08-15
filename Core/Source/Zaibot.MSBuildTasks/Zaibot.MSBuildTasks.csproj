@@ -58,6 +58,7 @@
     <Compile Include="VersionTextTask.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Zaibot.MSBuildTasks.targets">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -68,7 +69,6 @@
     <None Include="MSBuild.psm1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Zaibot.MSBuildTasks.Readme.txt">
