@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Example.Package</id>
+    <version>$version$</version>
+    <authors>Acme Company</authors>
+    <description>Package Description</description>
+    <releaseNotes></releaseNotes>
+    <language>en-US</language>
+    <tags></tags>
+    <projectUrl></projectUrl>
+    <licenseUrl></licenseUrl>
+  </metadata>
+  <files>
+    <file src="MyLibrary.dll" target="bin" />
+  </files>
+</package>

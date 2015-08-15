@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Zaibot.MSBuildTasks.NuGet</id>
+    <version>$version$</version>
+    <authors>Zaibot Programs</authors>
+    <description>Build and publish NuGet packages by setting the Build Action to ZaibotNuGetPack.</description>
+    <releaseNotes></releaseNotes>
+    <language>en-US</language>
+    <tags>.NET MSBuild NuGet</tags>
+    <projectUrl>http://www.zaibot.net/msbuildtasks/</projectUrl>
+    <licenseUrl>http://www.zaibot.net/msbuildtasks/license</licenseUrl>
+  </metadata>
+  <files>
+    <file src="Example.nuspec" target="content" />
+    <file src="Init.ps1" target="tools" />
+    <file src="MSBuild.psm1" target="tools" />
+    <file src="Zaibot.MSBuildTasks.NuGet.targets" target="tools" />
+    <file src="Zaibot.MSBuildTasks.NuGet.Readme.txt" target="tools" />
+  </files>
+</package>

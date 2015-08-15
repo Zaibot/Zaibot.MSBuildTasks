@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+  <PropertyGroup>
+    <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
+    <NuGetExe Condition="'$(NuGetExe)' == ''">$(SolutionDir).nuget\nuget.exe</NuGetExe>
+    <NuSpecPath Condition="'$(NuSpecPath)' == ''">(none)</NuSpecPath>
+    <NuGetSourceUrl Condition="'$(NuGetSourceUrl)' == ''"></NuGetSourceUrl>
+    <NuGetSourceApiKey Condition="'$(NuGetSourceApiKey)' == ''"></NuGetSourceApiKey>
+    <NuSpecMainAssemblyVersion Condition="'$(NuSpecMainAssemblyVersion)' == ''"></NuSpecMainAssemblyVersion>
+    <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)'==''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
+    <ZaibotMsBuildTasks Condition="'$(ZaibotMsBuildTasks)' == ''">$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.targets</ZaibotMsBuildTasks>
+  </PropertyGroup>
+  
+  <Import Project="$(ZaibotMsBuildTasks)" Condition="EXISTS('$(ZaibotMsBuildTasks)')" />
+
+  <ItemGroup>
+    <AvailableItemName Include="ZaibotNuGetPack" />
+  </ItemGroup>
+
+  <Target Name="NuPkgClean" AfterTargets="Clean">
+    <ItemGroup>
+      <NuPkgFiles Include="$(TargetDir)**\*.nupkg"/>
+    </ItemGroup>
+
+    <Message Importance="High" Text="Deleting nuget packages from TargetDir" />
+    <Delete Files="@(NuPkgFiles)" />
+  </Target>
+
+  <Target Name="NuSpecBuildBootstrap" DependsOnTargets="NuPkgClean" AfterTargets="AfterBuild" Condition="$(Configuration) == 'Release'">
+    <Message Importance="High" Text="Start NuGet packaging..." />
+    <Error Condition="!EXISTS($(NuGetExe))" Text="Could not find nuget.exe in $(NuGetExe). Either put the nuget.exe in $(SolutionDir).nuget\nuget.exe or define another location in the MSBuild parameter: NuGetExe"/>
+    
+    <MSBuild Projects="$(MSBuildProjectFile)"
+             Properties="NuSpecPath=%(ZaibotNuGetPack.FullPath);NuSpecMainAssembly=$(TargetPath)"
+             Targets="NuSpecBuild">
+    </MSBuild>
+  </Target>
+
+  <Target Name="GetNuSpecAssemblyVersion" AfterTargets="Build" Condition="$(Configuration) == 'Release'">
+    <PropertyGroup>
+      <NuSpecMainAssemblyVersion Condition="'$(ProductVersionAnnotated)' != ''">$(ProductVersionAnnotated)</NuSpecMainAssemblyVersion>
+      <NuSpecMainAssemblyVersion Condition="'$(ProductVersionAnnotated)' == ''">$(NuSpecMainAssemblyInfo.Version)</NuSpecMainAssemblyVersion>
+    </PropertyGroup>
+  </Target>
+  
+  <Target Name="NuSpecPublishBootstrap" AfterTargets="AfterBuild" Condition="$(Configuration) == 'Release'">
+    <ItemGroup>
+      <NuPkgFiles Include="$(TargetDir)**\*.nupkg"/>
+    </ItemGroup>
+    
+    <Message Importance="High" Text="Start NuGet publishing..." />
+    <MSBuild Projects="$(MSBuildProjectFile)"
+             Properties="NuSpecMainPackageFile=%(NuPkgFiles.FullPath)"
+             Targets="NuSpecPublish">
+    </MSBuild>
+  </Target>
+
+  <Target Name="NuSpecPublish" AfterTargets="NuSpecPublishBoot" Condition="'$(NuSpecMainPackageFile)' != '' AND '$(NuGetSourceUrl)' != '(none)'">
+    <Error Condition="!EXISTS($(NuSpecMainPackageFile))" Text="Could not find nuget package $(NuSpecMainPackageFile)."/>
+
+    <Message Importance="High" Text="Publishing $(NuSpecMainPackageFile)..." />
+    <Exec WorkingDirectory="$(TargetDir)" Command="&quot;$(NuGetExe)&quot; push &quot;$(NuSpecMainPackageFile)&quot; $(NuGetSourceApiKey) -Source $(NuGetSourceUrl) -NonInteractive" />
+  </Target>
+
+  <Target Name="NuSpecBuild">
+    <Error Condition="!EXISTS($(NuGetExe))" Text="Could not find nuget.exe in $(NuGetExe). Either put the nuget.exe in place or define another location in the MSBuild parameter: NuGetExe"/>
+    <Error Condition="!EXISTS($(TargetPath))" Text="Could not find build output $(TargetPath). I require TargetPath to be defined in MSBuild."/>
+    <Error Condition="!EXISTS($(NuSpecPath))" Text="Could not find nuspec $(NuSpecPath)."/>
+
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="NuSpecMainAssemblyInfo"/>
+    </GetAssemblyIdentity>
+    
+    <PropertyGroup>
+      <NuGetPackCommand>&quot;$(NuGetExe)&quot; pack &quot;$(NuSpecPath)&quot; -BasePath &quot;$(TargetDir.TrimEnd('\'))&quot; -Version $(NuSpecMainAssemblyVersion) -Properties &quot;TargetDir=$(TargetDir);&quot; -NoPackageAnalysis -NonInteractive</NuGetPackCommand>
+    </PropertyGroup>
+
+    <Message Importance="High" Text="Running NuGet: $(NuGetPackCommand)"/>
+    <Exec WorkingDirectory="$(TargetDir)" Command="$(NuGetPackCommand)" Outputs="$(TargetDir)" />
+  </Target>
+</Project>
