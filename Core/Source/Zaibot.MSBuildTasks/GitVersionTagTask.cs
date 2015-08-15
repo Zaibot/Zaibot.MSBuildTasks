@@ -40,7 +40,7 @@ namespace Zaibot.MSBuildTasks
 
         protected override string GenerateCommandLineCommands()
         {
-            return "describe --always --tags";
+            return "describe --abbrev=0 --tags";
         }
 
         protected override void HandleOutput(string singleLine)

@@ -48,7 +48,9 @@
       <Link>Properties\MSBuildTasks_Version.cs</Link>
     </Compile>
     <Compile Include="AssemblyVersionTask.cs" />
+    <Compile Include="GitDescribeTagTask.cs" />
     <Compile Include="GitDescribeTask.cs" />
+    <Compile Include="GitRevParseTask.cs" />
     <Compile Include="GitShortRevTask.cs" />
     <Compile Include="GitToolBase.cs" />
     <Compile Include="GitToolCommitCountTask.cs" />
