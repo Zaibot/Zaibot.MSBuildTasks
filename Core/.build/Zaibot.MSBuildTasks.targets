@@ -1,95 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)'==''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
+    <ZaibotMSBuildTasksLib>$([MSBUILD]::Unescape($(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll))</ZaibotMSBuildTasksLib>
+    <VersionFile Condition="'$(VersionFile)' == ''">$(SolutionDir)Includes\$(SolutionName)_Version.cs</VersionFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ZaibotMSBuildTasksPresent>True</ZaibotMSBuildTasksPresent>
+    <GitRevision Condition="'$(GitRevision)' == ''">unknown</GitRevision>
+    <GitVersionMajor Condition="'$(GitVersionMajor)' == ''">unknown</GitVersionMajor>
+    <GitVersionMinor Condition="'$(GitVersionMinor)' == ''">unknown</GitVersionMinor>
+    <GitVersionRevision Condition="'$(GitVersionRevision)' == ''">unknown</GitVersionRevision>
+    <GitVersionBuild Condition="'$(GitVersionBuild)' == ''">unknown</GitVersionBuild>
+    <GitVersionTag Condition="'$(GitVersionTag)' == ''">unknown</GitVersionTag>
+    <GitCommitSinceVersion Condition="'$(GitCommitSinceVersion)' == ''">unknown</GitCommitSinceVersion>
+    <ProductVersionMajor Condition="'$(ProductVersionMajor)' == ''">unknown</ProductVersionMajor>
+    <ProductVersionMinor Condition="'$(ProductVersionMinor)' == ''">unknown</ProductVersionMinor>
+    <ProductVersionRevision Condition="'$(ProductVersionRevision)' == ''">unknown</ProductVersionRevision>
+    <ProductVersionBuild Condition="'$(ProductVersionBuild)' == ''">unknown</ProductVersionBuild>
+    <ProductVersionAnnotation Condition="'$(ProductVersionAnnotation)' == ''">unknown</ProductVersionAnnotation>
+    <ProductVersion Condition="'$(ProductVersion)' == ''">unknown</ProductVersion>
+    <ProductVersionAnnotated Condition="'$(ProductVersionAnnotated)' == ''">unknown</ProductVersionAnnotated>
+    <GitTag Condition="'$(GitTag)' == ''">unknown</GitTag>
+  </PropertyGroup>
+
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitShortRevTask" />
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitVersionTagTask" />
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitToolCommitCountTask" />
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="AssemblyVersionTask" />
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="VersionTextTask" />
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitDescribeTask" />
+
+  <Target Name="UpdateVersionByGit" BeforeTargets="BeforeBuild">
+    <GitShortRevTask LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Revision" PropertyName="GitRevision" />
+    </GitShortRevTask>
+    <GitVersionTagTask LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Major" PropertyName="GitVersionMajor" />
+      <Output TaskParameter="Minor" PropertyName="GitVersionMinor" />
+      <Output TaskParameter="Revision" PropertyName="GitVersionRevision" />
+      <Output TaskParameter="Build" PropertyName="GitVersionBuild" />
+      <Output TaskParameter="Tag" PropertyName="GitVersionTag" />
+      <Output TaskParameter="Annotation" PropertyName="GitVersionAnnotation" />
+    </GitVersionTagTask>
+    <GitToolCommitCountTask LocalPath="$(SolutionDir)" Since="$(GitVersionTag)">
+      <Output TaskParameter="Count" PropertyName="GitCommitSinceVersion" />
+    </GitToolCommitCountTask>
+    <GitDescribeTask LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Text" PropertyName="GitDescribe" />
+    </GitDescribeTask>
+
+    <Message Text="GIT Describe: $(GitDescribe)" />
+    <Message Text="GIT Revision: $(GitRevision)" />
+    <Message Text="GIT Version: $(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitVersionBuild)-$(GitVersionAnnotation)" />
+    <Message Text="GIT Following Commits: $(GitCommitSinceVersion)" />
+
     <PropertyGroup>
-        <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)'==''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
-        <ZaibotMSBuildTasksLib>$([MSBUILD]::Unescape($(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll))</ZaibotMSBuildTasksLib>
-        <VersionFile Condition="'$(VersionFile)' == ''">$(SolutionDir)Includes\$(SolutionName)_Version.cs</VersionFile>
+      <ProductVersionMajor>$(GitVersionMajor)</ProductVersionMajor>
+      <ProductVersionMinor>$(GitVersionMinor)</ProductVersionMinor>
+      <ProductVersionRevision>$(GitVersionRevision)</ProductVersionRevision>
+      <ProductVersionBuild>$(GitVersionBuild)</ProductVersionBuild>
+      <ProductVersionAnnotation>$(GitVersionAnnotation)</ProductVersionAnnotation>
+      <GitTag>$(GitVersionTag)</GitTag>
     </PropertyGroup>
 
     <PropertyGroup>
-        <GitRevision>unknown</GitRevision>
-        <GitVersionMajor>unknown</GitVersionMajor>
-        <GitVersionMinor>unknown</GitVersionMinor>
-        <GitVersionRevision>unknown</GitVersionRevision>
-        <GitVersionBuild>unknown</GitVersionBuild>
-        <GitVersionTag>unknown</GitVersionTag>
-        <GitCommitSinceVersion>unknown</GitCommitSinceVersion>
-        <ProductVersionMajor>unknown</ProductVersionMajor>
-        <ProductVersionMinor>unknown</ProductVersionMinor>
-        <ProductVersionRevision>unknown</ProductVersionRevision>
-        <ProductVersionBuild>unknown</ProductVersionBuild>
-        <ProductVersionAnnotation>unknown</ProductVersionAnnotation>
-        <ProductVersion>unknown</ProductVersion>
-        <ProductVersionAnnotated>unknown</ProductVersionAnnotated>
-        <GitTag>unknown</GitTag>
+      <ProductVersion>$(GitDescribe)</ProductVersion>
+      <ProductVersionAnnotated Condition="'$(ProductVersionAnnotation)' != ''">$(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision)-$(GitVersionAnnotation)</ProductVersionAnnotated>
+      <ProductVersionAnnotated Condition="'$(ProductVersionAnnotation)' == ''">$(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision)</ProductVersionAnnotated>
     </PropertyGroup>
 
-    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitShortRevTask" />
-    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitVersionTagTask" />
-    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitToolCommitCountTask" />
-    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="AssemblyVersionTask" />
-    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="VersionTextTask" />
-    <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitDescribeTask" />
+    <VersionTextTask Major="$(ProductVersionMajor)"
+                     Minor="$(ProductVersionMinor)"
+                     Revision="$(ProductVersionRevision)"
+                     Build="$(ProductVersionBuild)"
+                     Commit="$(GitRevision)"
+                     Annotation="$(ProductVersionAnnotation)"
+                     ChangedSinceTag="'$(GitCommitSinceVersion)'!='0'">
+      <Output TaskParameter="Short" PropertyName="ProductVersionShort" />
+      <Output TaskParameter="Long" PropertyName="ProductVersionLong" />
+      <Output TaskParameter="Descriptive" PropertyName="ProductVersionDescriptive" />
+    </VersionTextTask>
 
-    <Target Name="UpdateVersionByGit" BeforeTargets="BeforeBuild">
-        <GitShortRevTask LocalPath="$(SolutionDir)">
-            <Output TaskParameter="Revision" PropertyName="GitRevision" />
-        </GitShortRevTask>
-        <GitVersionTagTask LocalPath="$(SolutionDir)">
-            <Output TaskParameter="Major" PropertyName="GitVersionMajor" />
-            <Output TaskParameter="Minor" PropertyName="GitVersionMinor" />
-            <Output TaskParameter="Revision" PropertyName="GitVersionRevision" />
-            <Output TaskParameter="Build" PropertyName="GitVersionBuild" />
-            <Output TaskParameter="Tag" PropertyName="GitVersionTag" />
-            <Output TaskParameter="Annotation" PropertyName="GitVersionAnnotation" />
-        </GitVersionTagTask>
-        <GitToolCommitCountTask LocalPath="$(SolutionDir)" Since="$(GitVersionTag)">
-            <Output TaskParameter="Count" PropertyName="GitCommitSinceVersion" />
-        </GitToolCommitCountTask>
-        <GitDescribeTask LocalPath="$(SolutionDir)">
-            <Output TaskParameter="Text" PropertyName="GitDescribe" />
-        </GitDescribeTask>
+    <Message Text="Product Version: $(ProductVersion)" />
+    <Message Text="Product Version Annotated: $(ProductVersionAnnotated)" />
 
-        <Message Text="GIT Describe: $(GitDescribe)" />
-        <Message Text="GIT Revision: $(GitRevision)" />
-        <Message Text="GIT Version: $(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitVersionBuild)-$(GitVersionAnnotation)" />
-        <Message Text="GIT Following Commits: $(GitCommitSinceVersion)" />
-
-        <PropertyGroup>
-            <ProductVersionMajor>$(GitVersionMajor)</ProductVersionMajor>
-            <ProductVersionMinor>$(GitVersionMinor)</ProductVersionMinor>
-            <ProductVersionRevision>$(GitVersionRevision)</ProductVersionRevision>
-            <ProductVersionBuild>$(GitVersionBuild)</ProductVersionBuild>
-            <ProductVersionAnnotation>$(GitVersionAnnotation)</ProductVersionAnnotation>
-            <GitTag>$(GitVersionTag)</GitTag>
-        </PropertyGroup>
-        
-        <PropertyGroup>
-            <ProductVersion>$(GitDescribe)</ProductVersion>
-            <ProductVersionAnnotated Condition="'$(ProductVersionAnnotation)' != ''">$(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision)-$(GitVersionAnnotation)</ProductVersionAnnotated>
-            <ProductVersionAnnotated Condition="'$(ProductVersionAnnotation)' == ''">$(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision)</ProductVersionAnnotated>
-        </PropertyGroup>
-
-        <VersionTextTask Major="$(ProductVersionMajor)"
-                         Minor="$(ProductVersionMinor)" 
-                         Revision="$(ProductVersionRevision)"
-                         Build="$(ProductVersionBuild)"
-                         Commit="$(GitRevision)" 
-                         Annotation="$(ProductVersionAnnotation)" 
-                         ChangedSinceTag="'$(GitCommitSinceVersion)'!='0'">
-            <Output TaskParameter="Short" PropertyName="ProductVersionShort" />
-            <Output TaskParameter="Long" PropertyName="ProductVersionLong" />
-            <Output TaskParameter="Descriptive" PropertyName="ProductVersionDescriptive" />
-        </VersionTextTask>
-
-        <Message Text="Product Version: $(ProductVersion)" />
-        <Message Text="Product Version Annotated: $(ProductVersionAnnotated)" />
-
-        <Error Condition="!Exists('$(VersionFile)')" Text="The version file $(VersionFile) does not exist." />
-        <AssemblyVersionTask
-            File="$(VersionFile)"
-            Version="$(ProductVersionShort)"
-            FileVersion="$(ProductVersionLong)"
-            InfoVersion="$(GitDescribe)" />
-    </Target>
+    <Error Condition="!Exists('$(VersionFile)')" Text="The version file $(VersionFile) does not exist." />
+    <AssemblyVersionTask
+        File="$(VersionFile)"
+        Version="$(ProductVersionShort)"
+        FileVersion="$(ProductVersionLong)"
+        InfoVersion="$(GitDescribe)" />
+  </Target>
 </Project>
