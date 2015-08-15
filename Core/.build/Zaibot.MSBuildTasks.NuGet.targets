@@ -1,23 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
-  <PropertyGroup Condition="'$(Configuration.ToUpper())' == 'RELEASE'">
-    <ZaibotNugetPackRun Condition="'$(ZaibotNugetPackRun)' == ''">True</ZaibotNugetPackRun>
-    <ZaibotNugetPublishRun Condition="'$(ZaibotNugetPackRun)' == ''">True</ZaibotNugetPublishRun>
-  </PropertyGroup>
-  
   <PropertyGroup>
-    <ZaibotNugetPackRun Condition="'$(ZaibotNugetPackRun)' == ''">False</ZaibotNugetPackRun>
-    <ZaibotNugetPublishRun Condition="'$(ZaibotNugetPublishRun)' == ''">False</ZaibotNugetPublishRun>
     <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
     <NuGetExe Condition="'$(NuGetExe)' == ''">$(SolutionDir).nuget\nuget.exe</NuGetExe>
-    <NuSpecPath Condition="'$(NuSpecPath)' == ''"></NuSpecPath>
+    <NuSpecPath Condition="'$(NuSpecPath)' == ''">(none)</NuSpecPath>
     <NuGetSourceUrl Condition="'$(NuGetSourceUrl)' == ''"></NuGetSourceUrl>
     <NuGetSourceApiKey Condition="'$(NuGetSourceApiKey)' == ''"></NuGetSourceApiKey>
     <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)'==''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
     <ZaibotMsBuildTasks Condition="'$(ZaibotMsBuildTasks)' == ''">$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.targets</ZaibotMsBuildTasks>
     <NuSpecMainAssemblyVersion Condition="'$(NuSpecMainAssemblyVersion)' == ''"></NuSpecMainAssemblyVersion>
   </PropertyGroup>
-  
+
   <Import Project="$(ZaibotMsBuildTasks)" Condition="EXISTS('$(ZaibotMsBuildTasks)')" />
 
   <ItemGroup>
@@ -44,7 +37,7 @@
     <Delete Files="@(NuPkgFiles)" />
   </Target>
 
-  <Target Name="NuSpecBuildBootstrap" DependsOnTargets="NuPkgClean;GetNuSpecAssemblyVersion" AfterTargets="AfterBuild" Condition="$(ZaibotNugetPackRun) == 'True'">
+  <Target Name="NuSpecBuildBootstrap" DependsOnTargets="NuPkgClean;GetNuSpecAssemblyVersion" AfterTargets="AfterBuild" Condition="$(Configuration) == 'Release'">
     <Message Importance="High" Text="Start NuGet packaging..." />
     <Error Condition="!EXISTS($(NuGetExe))" Text="Could not find nuget.exe in $(NuGetExe). Either put the nuget.exe in $(SolutionDir).nuget\nuget.exe or define another location in the MSBuild parameter: NuGetExe"/>
     
@@ -61,7 +54,7 @@
     </MSBuild>
   </Target>
 
-  <Target Name="NuSpecPublishBootstrap" AfterTargets="AfterBuild" Condition="$(ZaibotNugetPublishRun) == 'True'">
+  <Target Name="NuSpecPublishBootstrap" AfterTargets="AfterBuild" Condition="$(Configuration) == 'Release'">
     <ItemGroup>
       <NuPkgFiles Include="$(TargetDir)**\*.nupkg"/>
     </ItemGroup>
@@ -73,7 +66,7 @@
     </MSBuild>
   </Target>
 
-  <Target Name="NuSpecPublish" AfterTargets="NuSpecPublishBoot" Condition="'$(NuSpecMainPackageFile)' != '' AND '$(NuGetSourceUrl)' != ''">
+  <Target Name="NuSpecPublish" AfterTargets="NuSpecPublishBoot" Condition="'$(NuSpecMainPackageFile)' != '' AND '$(NuGetSourceUrl)' != '(none)'">
     <Error Condition="!EXISTS($(NuSpecMainPackageFile))" Text="Could not find nuget package $(NuSpecMainPackageFile)."/>
 
     <Message Importance="High" Text="Publishing $(NuSpecMainPackageFile)..." />
