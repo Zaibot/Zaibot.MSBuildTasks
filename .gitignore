@@ -190,3 +190,5 @@ ModelManifest.xml
 
 Output/
 packages/
+
+PrivatePublish.cmd
