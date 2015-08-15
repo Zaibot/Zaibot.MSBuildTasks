@@ -55,6 +55,7 @@
     <None Include="MSBuild.psm1" />
     <None Include="NuGet.nuproj" />
     <None Include="MSBuildTasks.nuspec" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Zaibot.MSBuildTasks.Readme.txt" />
