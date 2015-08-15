@@ -13,6 +13,9 @@
 // 
 // ----------------------------------------
 
+using System;
+using System.IO;
+using System.Threading;
 using Microsoft.Build.Utilities;
 
 namespace Zaibot.MSBuildTasks
@@ -32,12 +35,32 @@ namespace Zaibot.MSBuildTasks
                 + "[assembly: AssemblyFileVersion(\"{1}\")]\r\n"
                 + "[assembly: AssemblyInformationalVersion(\"{2}\")]\r\n";
 
-            var assVersion = this.Version;
-            var assFileVersion = this.FileVersion;
-            var assInfoVersion = this.InfoVersion;
+            var assVersion = Version;
+            var assFileVersion = FileVersion;
+            var assInfoVersion = InfoVersion;
 
-            System.IO.File.WriteAllText(this.File, string.Format(format, assVersion, assFileVersion, assInfoVersion));
-            return true;
+            var retries = 50;
+            while (retries-- > 0)
+            {
+                try
+                {
+                    using (var fs = new FileStream(File, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+                    using (var sw = new StreamWriter(fs))
+                    {
+                        sw.Write(format, assVersion, assFileVersion, assInfoVersion);
+                        sw.Flush();
+                    }
+                    return true;
+                }
+                catch
+                {
+                    if (retries == 0)
+                        throw;
+
+                    Thread.Sleep(100);
+                }
+            }
+            return false;
         }
     }
 }
