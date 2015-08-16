@@ -2,12 +2,22 @@
 
 Import-Module (Join-Path $toolsPath "MSBuild.psm1")
 
+function Get-SolutionName {
+    if($dte.Solution -and $dte.Solution.IsOpen) {
+        return Split-Path $dte.Solution.Properties.Item("Name").Value
+    }
+    else {
+        throw "Solution not avaliable"
+    }
+}
+
 function Add-Solution-ProductVersionInclude() {
 	$solutionDir = Get-SolutionDir
+	$solutionName = Get-SolutionName
+
 	$includesPath = (Join-Path $solutionDir "Includes")
 
 	$solution = Get-Interface $dte.Solution ([EnvDTE80.Solution2])
-	$solutionName = $dte.Solution.Properties.Item("Name").Value;
 	$projectItems = $project.ProjectItems
 	
 	# Add files to includes folder.
