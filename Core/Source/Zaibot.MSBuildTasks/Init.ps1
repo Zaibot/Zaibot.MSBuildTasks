@@ -15,13 +15,6 @@ function Copy-MSBuildTasks($project) {
 	Copy-Item "$toolsPath\Zaibot.MSBuildTasks.targets" $tasksToolsPath -Force | Out-Null
 	Copy-Item "$toolsPath\Zaibot.MSBuildTasks.Readme.txt" $tasksToolsPath -Force | Out-Null
 
-	$buildFile = Join-Path $solutionDir "Build.proj"
-	
-	#if(!(Test-Path $buildFile)) {
-	#	Write-Host "Copying Sample Build.proj to $solutionDir"
-	#	Copy-Item "$toolsPath\Build.proj" $solutionDir | Out-Null
-	#}
-
 	Write-Host "Don't forget to commit the .build folder"
 	return "$tasksToolsPath"
 }
