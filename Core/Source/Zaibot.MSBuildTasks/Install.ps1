@@ -24,14 +24,14 @@ function Add-Solution-ProductVersionInclude() {
 	if(!(Test-Path $includesPath)) {
 		mkdir $includesPath | Out-Null
 	}
-	$solFile = Join-Path $includesPath ("$solutionName"+"_Product.cs")
-	if (!(Test-Path $solFile)) {
-		Copy-Item (Join-Path $toolsPath "ProductName_Product.cs") $solFile -Force | Out-Null
+	$solProdFile = Join-Path $includesPath ("$solutionName"+"_Product.cs")
+	if (!(Test-Path $solProdFile)) {
+		Copy-Item (Join-Path $toolsPath "ProductName_Product.cs") $solProdFile -Force | Out-Null
 		Write-Host ("Product information include copied, please fill out the information in Includes\" + $solutionName + "_Product.cs.")
 	}
-	$solFile = Join-Path $includesPath ("$solutionName"+"_Version.cs")
-	if (!(Test-Path $solFile)) {
-		Copy-Item (Join-Path $toolsPath "ProductName_Version.cs") $solFile -Force | Out-Null
+	$solVerFile = Join-Path $includesPath ("$solutionName"+"_Version.cs")
+	if (!(Test-Path $solVerFile)) {
+		Copy-Item (Join-Path $toolsPath "ProductName_Version.cs") $solVerFile -Force | Out-Null
 		Write-Host "Version information include copied."
 	}
 
@@ -40,13 +40,14 @@ function Add-Solution-ProductVersionInclude() {
 	if (!$includesFolder) {
 		$includesFolder = $solution.AddSolutionFolder("Includes")
 	}
+	$includesFolderProperties = $includesFolder.ProjectItems
 
 	# Register includes with projects.
-	$dllPath = [IO.Path]::GetFullPath( (Join-Path $includesPath "$solutionName_Product.cs") )
-	$projectItems.Item('Properties').ProjectItems.AddFromFile($dllPath)
+	$projectItems.Item('Properties').ProjectItems.AddFromFile($solProdFile)
+	$includesFolderProperties.Item('Properties').ProjectItems.AddFromFile($solProdFile)
 
-	$dllPath = [IO.Path]::GetFullPath( (Join-Path $includesPath "$solutionName_Version.cs") )
-	$projectItems.Item('Properties').ProjectItems.AddFromFile($dllPath)
+	$projectItems.Item('Properties').ProjectItems.AddFromFile($solVerFile)
+	$includesFolderProperties.Item('Properties').ProjectItems.AddFromFile($solVerFile)
 }
 
 
