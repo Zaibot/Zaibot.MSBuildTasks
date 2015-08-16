@@ -7,7 +7,7 @@ function Add-Solution-ProductVersionInclude() {
 	$includesPath = (Join-Path $solutionDir "Includes")
 
 	$solution = Get-Interface $dte.Solution ([EnvDTE80.Solution2])
-	$solutionName = $solution.Name;
+	$solutionName = $dte.Solution.Properties.Item("Name").Value;
 	$projectItems = $project.ProjectItems
 	
 	# Add files to includes folder.
