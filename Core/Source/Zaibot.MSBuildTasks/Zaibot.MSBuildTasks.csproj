@@ -81,12 +81,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ProductName_Product.txt">
+    <None Include="ProductName_Product.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ProductName_Version.txt">
+    </None>
+    <None Include="ProductName_Version.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Zaibot.MSBuildTasks.Readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
