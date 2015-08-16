@@ -51,7 +51,7 @@ function Add-Solution-ProductVersionInclude() {
 
 	# Open the files for editing.
 	$project.ProjectItems.Item('Properties').ProjectItems.Item("AssemblyInfo.cs").Open().Activate()
-	$includesFolderProperties.Item($solProdFile).Open()
+	$includesFolderProperties.Item($solProdFile).Open().Activate()
 	Open-AssemblyInfo-ForEdit($project)
 }
 
