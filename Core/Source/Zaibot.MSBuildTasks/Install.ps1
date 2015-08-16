@@ -27,7 +27,7 @@ function Add-Solution-ProductVersionInclude() {
 	$solFile = Join-Path $includesPath ("$solutionName"+"_Product.cs")
 	if (!(Test-Path $solFile)) {
 		Copy-Item (Join-Path $toolsPath "ProductName_Product.cs") $solFile -Force | Out-Null
-		Write-Host "Product information include copied, please fill out the information in Includes\$solutionName_Product.cs."
+		Write-Host ("Product information include copied, please fill out the information in Includes\" + $solutionName + "_Product.cs.")
 	}
 	$solFile = Join-Path $includesPath ("$solutionName"+"_Version.cs")
 	if (!(Test-Path $solFile)) {
