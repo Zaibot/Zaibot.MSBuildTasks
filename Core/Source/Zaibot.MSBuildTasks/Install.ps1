@@ -44,10 +44,10 @@ function Add-Solution-ProductVersionInclude() {
 
 	# Register includes with projects.
 	$projectItems.Item('Properties').ProjectItems.AddFromFile($solProdFile)
-	$includesFolderProperties.Item('Properties').ProjectItems.AddFromFile($solProdFile)
+	$includesFolderProperties.ProjectItems.AddFromFile($solProdFile)
 
 	$projectItems.Item('Properties').ProjectItems.AddFromFile($solVerFile)
-	$includesFolderProperties.Item('Properties').ProjectItems.AddFromFile($solVerFile)
+	$includesFolderProperties.ProjectItems.AddFromFile($solVerFile)
 }
 
 
