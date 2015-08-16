@@ -78,9 +78,9 @@
     <None Include="MSBuild.psm1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Example.nuspec">
+    <Content Include="Example.nuspec.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
     <None Include="Zaibot.MSBuildTasks.NuGet.targets">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

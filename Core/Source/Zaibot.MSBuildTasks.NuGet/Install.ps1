@@ -7,7 +7,7 @@ function Add-Default-NuSpec() {
 	$projectName = $project.Properties.Item('AssemblyName').Value
 	$projectItems = $project.ProjectItems
 
-	$nuspecSourceFile = Join-Path $toolsPath "Example.nuspec"
+	$nuspecSourceFile = Join-Path $toolsPath "Example.nuspec.txt"
 	$nuspecFileName = "$projectName" + ".nuspec"
 	$nuspecFile = Join-Path $projectDir $nuspecFileName
 

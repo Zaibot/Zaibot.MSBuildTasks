@@ -13,7 +13,7 @@
     <licenseUrl>http://www.zaibot.net/msbuildtasks/license</licenseUrl>
   </metadata>
   <files>
-    <file src="Example.nuspec" target="tools" />
+    <file src="Example.nuspec.txt" target="tools" />
     <file src="Init.ps1" target="tools" />
     <file src="Install.ps1" target="tools" />
     <file src="MSBuild.psm1" target="tools" />
