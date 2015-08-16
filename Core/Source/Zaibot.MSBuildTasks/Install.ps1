@@ -4,7 +4,7 @@ Import-Module (Join-Path $toolsPath "MSBuild.psm1")
 
 function Get-SolutionName {
     if($dte.Solution -and $dte.Solution.IsOpen) {
-        return Split-Path $dte.Solution.Properties.Item("Name").Value
+        return $dte.Solution.Properties.Item("Name").Value
     }
     else {
         throw "Solution not avaliable"
