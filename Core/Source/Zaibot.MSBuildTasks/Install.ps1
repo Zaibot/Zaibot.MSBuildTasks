@@ -60,8 +60,13 @@ function Open-AssemblyInfo-ForEdit($project) {
 	if($assemblyInfo) {
 		$assemblyInfo.Open()
 		$assemblyInfo.Document.Activate()
-		$assemblyInfo.Document.Selection.StartOfDocument()
-		$assemblyInfo.Document.Selection.Insert("using System.Reflection;`r`n`r`n[assembly: AssemblyTitle(`"ProjectTitle`")]`r`n[assembly: AssemblyDescription(`"ProjectDescription`")]`r`n`r`n// Remove unnecessary code below and merge what is necessary, product and version information is defined in shared files.`r`n`r`n")
+
+		if ($assemblyInfo.Document.MarkText("AssemblyVersion") -or $assemblyInfo.Document.MarkText("AssemblyCompany") -or $assemblyInfo.Document.MarkText("AssemblyProduct")) {
+			$assemblyInfo.Document.Selection.StartOfDocument()
+			$assemblyInfo.Document.Selection.Insert("using System.Reflection;`r`n`r`n[assembly: AssemblyTitle(`"ProjectTitle`")]`r`n[assembly: AssemblyDescription(`"ProjectDescription`")]`r`n`r`n// Remove unnecessary code below and merge what is necessary, product and version information is defined in shared files.`r`n`r`n")
+		} else {
+			$assemblyInfo.Document.Close(0)
+		}
 	} else {
 		Write-Host "AssemblyInfo.cs not found -- open the AssemblyInfo file manually and remove product and version attributes."
 	}
