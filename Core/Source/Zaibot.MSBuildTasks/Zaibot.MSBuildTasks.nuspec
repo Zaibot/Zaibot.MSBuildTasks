@@ -15,9 +15,10 @@
     <files>
       <file src="Init.ps1" target="tools" />
       <file src="MSBuild.psm1" target="tools" />
-      <file src="Zaibot.MSBuildTasks.Readme.txt" target="tools" />
       <file src="Zaibot.MSBuildTasks.dll" target="tools" />
       <file src="Zaibot.MSBuildTasks.pdb" target="tools" />
+      <file src="Zaibot.MSBuildTasks.Readme.txt" target="tools" />
       <file src="Zaibot.MSBuildTasks.targets" target="tools" />
+      <file src="Zaibot.MSBuildTasks.targets" target="build" />
     </files>
 </package>
