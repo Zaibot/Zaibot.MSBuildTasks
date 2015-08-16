@@ -24,12 +24,14 @@ function Add-Solution-ProductVersionInclude() {
 	if(!(Test-Path $includesPath)) {
 		mkdir $includesPath | Out-Null
 	}
-	if (!(Test-Path(Join-Path $includesFolder "$solutionName_Product.cs"))) {
-		Copy-Item "$toolsPath\ProductName_Product.cs" (Join-Path $includesPath "$solutionName_Product.cs") -Force | Out-Null
-		Write-Host "Product information include copied, please fill out the information in Includes\$solutionName_Product.cs."
+	$solProdFile = Join-Path $includesPath ("$solutionName"+"_Product.cs")
+	if (!(Test-Path $solProdFile)) {
+		Copy-Item (Join-Path $toolsPath "ProductName_Product.cs") $solProdFile -Force | Out-Null
+		Write-Host ("Product information include copied, please fill out the information in Includes\" + $solutionName + "_Product.cs.")
 	}
-	if (!(Test-Path(Join-Path $includesFolder "$solutionName_Version.cs"))) {
-		Copy-Item "$toolsPath\ProductName_Version.cs" (Join-Path $includesPath "$solutionName_Version.cs") -Force | Out-Null
+	$solVerFile = Join-Path $includesPath ("$solutionName"+"_Version.cs")
+	if (!(Test-Path $solVerFile)) {
+		Copy-Item (Join-Path $toolsPath "ProductName_Version.cs") $solVerFile -Force | Out-Null
 		Write-Host "Version information include copied."
 	}
 
@@ -38,13 +40,14 @@ function Add-Solution-ProductVersionInclude() {
 	if (!$includesFolder) {
 		$includesFolder = $solution.AddSolutionFolder("Includes")
 	}
+	$includesFolderProperties = $includesFolder.ProjectItems
 
 	# Register includes with projects.
-	$dllPath = [IO.Path]::GetFullPath( (Join-Path $includesPath "$solutionName_Product.cs") )
-	$projectItems.Item('Properties').ProjectItems.AddFromFile($dllPath)
+	$projectItems.Item('Properties').ProjectItems.AddFromFile($solProdFile)
+	$includesFolderProperties.ProjectItems.AddFromFile($solProdFile)
 
-	$dllPath = [IO.Path]::GetFullPath( (Join-Path $includesPath "$solutionName_Version.cs") )
-	$projectItems.Item('Properties').ProjectItems.AddFromFile($dllPath)
+	$projectItems.Item('Properties').ProjectItems.AddFromFile($solVerFile)
+	$includesFolderProperties.ProjectItems.AddFromFile($solVerFile)
 }
 
 
