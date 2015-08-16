@@ -25,12 +25,12 @@ function Add-Solution-ProductVersionInclude() {
 		mkdir $includesPath | Out-Null
 	}
 	$solFile = Join-Path $includesPath ("$solutionName"+"_Product.cs")
-	if (!(Test-Path($solFile)) {
+	if (!(Test-Path $solFile)) {
 		Copy-Item "$toolsPath\ProductName_Product.cs" $solFile -Force | Out-Null
 		Write-Host "Product information include copied, please fill out the information in Includes\$solutionName_Product.cs."
 	}
 	$solFile = Join-Path $includesPath ("$solutionName"+"_Version.cs")
-	if (!(Test-Path(Join-Path $includesPath $solFile))) {
+	if (!(Test-Path $solFile)) {
 		Copy-Item "$toolsPath\ProductName_Version.cs" $solFile -Force | Out-Null
 		Write-Host "Version information include copied."
 	}
