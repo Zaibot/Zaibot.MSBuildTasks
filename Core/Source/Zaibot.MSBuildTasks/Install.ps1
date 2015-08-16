@@ -48,6 +48,28 @@ function Add-Solution-ProductVersionInclude() {
 
 	$projectItems.Item('Properties').ProjectItems.AddFromFile($solVerFile)
 	$includesFolderProperties.AddFromFile($solVerFile)
+
+	# Open the files for editing.
+	$project.ProjectItems.Item('Properties').ProjectItems.Item("AssemblyInfo.cs").Open()
+	$includesFolderProperties.Item($solProdFile).Open().Activate()
+	Open-AssemblyInfo-ForEdit($project)
+}
+
+function Open-AssemblyInfo-ForEdit($project) {
+	$assemblyInfo = ($project.ProjectItems.Item('Properties').ProjectItems | Where { $_.Name -eq 'AssemblyInfo.cs' })
+	if($assemblyInfo) {
+		$assemblyInfo.Open()
+		$assemblyInfo.Document.Activate()
+
+		if ($assemblyInfo.Document.MarkText("AssemblyVersion") -or $assemblyInfo.Document.MarkText("AssemblyCompany") -or $assemblyInfo.Document.MarkText("AssemblyProduct")) {
+			$assemblyInfo.Document.Selection.StartOfDocument()
+			$assemblyInfo.Document.Selection.Insert("using System.Reflection;`r`n`r`n[assembly: AssemblyTitle(`"ProjectTitle`")]`r`n[assembly: AssemblyDescription(`"ProjectDescription`")]`r`n`r`n// Remove unnecessary code below and merge what is necessary, product and version information is defined in shared files.`r`n`r`n")
+		} else {
+			$assemblyInfo.Document.Close(0)
+		}
+	} else {
+		Write-Host "AssemblyInfo.cs not found -- open the AssemblyInfo file manually and remove product and version attributes."
+	}
 }
 
 
