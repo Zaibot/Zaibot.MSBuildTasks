@@ -18,8 +18,8 @@
       <file src="Install.ps1" target="tools" />
       <file src="Uninstall.ps1" target="tools" />
 
-      <file src="ProductName_Product.txt" target="tools/ProductName_Product.cs" />
-      <file src="ProductName_Version.txt" target="tools/ProductName_Version.cs" />
+      <file src="ProductName_Product.cs" target="tools" />
+      <file src="ProductName_Version.cs" target="tools" />
 
       <file src="Zaibot.MSBuildTasks.dll" target="tools" />
       <file src="Zaibot.MSBuildTasks.pdb" target="tools" />
