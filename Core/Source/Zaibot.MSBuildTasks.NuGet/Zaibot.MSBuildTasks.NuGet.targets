@@ -70,7 +70,8 @@
     <Error Condition="!EXISTS($(NuSpecMainPackageFile))" Text="Could not find nuget package $(NuSpecMainPackageFile)."/>
 
     <Message Importance="High" Text="Publishing $(NuSpecMainPackageFile)..." />
-    <Exec WorkingDirectory="$(TargetDir)" Command="&quot;$(NuGetExe)&quot; push &quot;$(NuSpecMainPackageFile)&quot; $(NuGetSourceApiKey) -Source $(NuGetSourceUrl) -NonInteractive" />
+    <Exec Condition="'$(NuGetSourceUrl)'=='nuget'" WorkingDirectory="$(TargetDir)" Command="&quot;$(NuGetExe)&quot; push &quot;$(NuSpecMainPackageFile)&quot; $(NuGetSourceApiKey) -NonInteractive" />
+    <Exec Condition="'$(NuGetSourceUrl)'!='nuget'" WorkingDirectory="$(TargetDir)" Command="&quot;$(NuGetExe)&quot; push &quot;$(NuSpecMainPackageFile)&quot; $(NuGetSourceApiKey) -Source $(NuGetSourceUrl) -NonInteractive" />
   </Target>
 
   <Target Name="NuSpecBuild">
