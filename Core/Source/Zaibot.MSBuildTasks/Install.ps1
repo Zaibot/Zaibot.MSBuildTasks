@@ -48,6 +48,10 @@ function Add-Solution-ProductVersionInclude() {
 
 	$projectItems.Item('Properties').ProjectItems.AddFromFile($solVerFile)
 	$includesFolderProperties.AddFromFile($solVerFile)
+
+	# Open the files for editing.
+	$project.ProjectItems.Item('Properties').ProjectItems.Item("AssemblyInfo.cs").Open()
+	$includesFolderProperties.Item($solProdFile).Open()
 }
 
 
