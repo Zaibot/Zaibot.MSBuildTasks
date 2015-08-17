@@ -45,7 +45,7 @@ namespace Zaibot.MSBuildTasks
         {
             var changesCommitDot = ChangedSinceTag == 0 ? "" : $".{Commit}";
             var annotation = string.IsNullOrEmpty(Annotation) ? "" : $"-{Annotation}";
-            var versionBranch = string.IsNullOrEmpty(Branch) ? "" : $" {Branch}";
+            var versionBranch = string.IsNullOrEmpty(Branch) || Branch == "master" ? "" : $" {Branch}";
 
             Short = $"{Major}.{Minor}";
             Long = $"{Major}.{Minor}.{Revision}.0";
