@@ -43,15 +43,14 @@ namespace Zaibot.MSBuildTasks
 
         public override bool Execute()
         {
-            var changesCommit = ChangedSinceTag == 0 ? "" : $"-{Commit}";
+            var changesCommitDot = ChangedSinceTag == 0 ? "" : $".{Commit}";
             var annotation = string.IsNullOrEmpty(Annotation) ? "" : $"-{Annotation}";
             var versionBranch = string.IsNullOrEmpty(Branch) ? "" : $" {Branch}";
 
             Short = $"{Major}.{Minor}";
-            Long = $"{Major}.{Minor}";
-            Long = $"{Major}.{Minor}.{Revision}.{ChangedSinceTag}";
-            DescriptiveShort = $"{Long}{annotation}{changesCommit}";
-            DescriptiveLong = $"{Long}{annotation}{changesCommit}{versionBranch}";
+            Long = $"{Major}.{Minor}.{Revision}.0";
+            DescriptiveShort = $"{Major}.{Minor}.{Revision}{annotation}{changesCommitDot}";
+            DescriptiveLong = $"{Major}.{Minor}.{Revision}{annotation}{changesCommitDot}{versionBranch}";
 
             return true;
         }
