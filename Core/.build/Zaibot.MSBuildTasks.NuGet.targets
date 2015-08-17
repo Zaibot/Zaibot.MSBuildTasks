@@ -80,7 +80,7 @@
     <Error Condition="!EXISTS($(NuSpecPath))" Text="Could not find nuspec $(NuSpecPath)."/>
  
     <PropertyGroup>
-      <NuGetPackCommand>&quot;$(NuGetExe)&quot; pack &quot;$(NuSpecPath)&quot; -BasePath &quot;$(TargetDir.TrimEnd('\'))&quot; -Version $(NuSpecMainAssemblyVersion) -Properties &quot;TargetDir=$(TargetDir);&quot; -NoPackageAnalysis -NonInteractive</NuGetPackCommand>
+      <NuGetPackCommand>&quot;$(NuGetExe)&quot; pack &quot;$(NuSpecPath)&quot; -BasePath &quot;$(TargetDir.TrimEnd('\'))&quot; -Version $(NuSpecMainAssemblyVersion) -Properties &quot;TargetDir=$(TargetDir);&quot; -NoDefaultExcludes -NoPackageAnalysis -NonInteractive</NuGetPackCommand>
     </PropertyGroup>
 
     <Message Importance="High" Text="Running NuGet: $(NuGetPackCommand)"/>
