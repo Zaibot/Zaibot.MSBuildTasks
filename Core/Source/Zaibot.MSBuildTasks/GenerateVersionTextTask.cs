@@ -1,9 +1,9 @@
 // ----------------------------------------
 // 
-//   Core
+//   MSBuildTasks
 //   Copyright (c) 2015 Zaibot Programs
 //   
-//   Creation: 2015-07-12
+//   Creation: 2015-08-16
 //     Author: Tobias de Groen
 //   Location: Arnhem, The Netherlands
 // 
@@ -13,18 +13,17 @@
 // 
 // ----------------------------------------
 
-using System.Collections.Generic;
-using System.Globalization;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 namespace Zaibot.MSBuildTasks
 {
-    public class VersionTextTask : Task
+    public class GenerateVersionTextTask : Task
     {
         public string Major { get; set; }
         public string Minor { get; set; }
         public string Revision { get; set; }
+        public string Branch { get; set; }
         public string Build { get; set; }
         public string Commit { get; set; }
         public string Annotation { get; set; }
@@ -37,19 +36,22 @@ namespace Zaibot.MSBuildTasks
         public string Long { get; set; }
 
         [Output]
-        public string Descriptive { get; set; }
+        public string DescriptiveShort { get; set; }
+
+        [Output]
+        public string DescriptiveLong { get; set; }
 
         public override bool Execute()
         {
-            this.Short = this.Major + "." + this.Minor;
-            this.Long = this.Major + "." + this.Minor;
-            this.Long = this.Major + "." + this.Minor + "." + this.Revision + "." + ChangedSinceTag;//this.Build;
+            var changesCommit = ChangedSinceTag == 0 ? "" : $"-{Commit}";
+            var annotation = string.IsNullOrEmpty(Annotation) ? "" : $"-{Annotation}";
+            var versionBranch = string.IsNullOrEmpty(Branch) ? "" : $" {Branch}";
 
-            var numbers = new List<string> {this.Major, this.Minor, this.Revision, this.ChangedSinceTag.ToString(CultureInfo.InvariantCulture) };
-
-            this.Descriptive = string.Join(".", numbers)
-                               + (string.IsNullOrEmpty(this.Annotation) ? "" : "-" + this.Annotation)
-                               + (this.ChangedSinceTag == 0 ? "" : string.Format("-{0}", this.Commit));
+            Short = $"{Major}.{Minor}";
+            Long = $"{Major}.{Minor}";
+            Long = $"{Major}.{Minor}.{Revision}.{ChangedSinceTag}";
+            DescriptiveShort = $"{Long}{annotation}{changesCommit}";
+            DescriptiveLong = $"{Long}{annotation}{changesCommit}{versionBranch}";
 
             return true;
         }

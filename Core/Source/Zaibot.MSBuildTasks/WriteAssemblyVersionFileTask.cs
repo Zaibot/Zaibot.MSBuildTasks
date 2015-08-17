@@ -20,7 +20,7 @@ using Microsoft.Build.Utilities;
 
 namespace Zaibot.MSBuildTasks
 {
-    public class AssemblyVersionTask : Task
+    public class WriteAssemblyVersionFileTask : Task
     {
         public string File { get; set; }
         public string Version { get; set; }

@@ -49,7 +49,8 @@
     <Compile Include="..\..\Includes\MSBuildTasks_Version.cs">
       <Link>Properties\MSBuildTasks_Version.cs</Link>
     </Compile>
-    <Compile Include="AssemblyVersionTask.cs" />
+    <Compile Include="WriteAssemblyVersionFileTask.cs" />
+    <Compile Include="GitCurrentBranchTask.cs" />
     <Compile Include="GitDescribeTagTask.cs" />
     <Compile Include="GitDescribeTask.cs" />
     <Compile Include="GitRevParseTask.cs" />
@@ -59,7 +60,7 @@
     <Compile Include="GitVersionTagTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolPathUtil.cs" />
-    <Compile Include="VersionTextTask.cs" />
+    <Compile Include="GenerateVersionTextTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Uninstall.ps1">

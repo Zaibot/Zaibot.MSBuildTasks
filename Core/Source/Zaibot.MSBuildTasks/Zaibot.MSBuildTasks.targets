@@ -15,6 +15,7 @@
     <GitVersionBuild Condition="'$(GitVersionBuild)' == ''">unknown</GitVersionBuild>
     <GitVersionTag Condition="'$(GitVersionTag)' == ''">unknown</GitVersionTag>
     <GitCommitSinceVersion Condition="'$(GitCommitSinceVersion)' == ''">unknown</GitCommitSinceVersion>
+    <GitCurrentBranch Condition="'$(GitCurrentBranch)' == ''">unknown</GitCurrentBranch>
     <ProductVersionMajor Condition="'$(ProductVersionMajor)' == ''">unknown</ProductVersionMajor>
     <ProductVersionMinor Condition="'$(ProductVersionMinor)' == ''">unknown</ProductVersionMinor>
     <ProductVersionRevision Condition="'$(ProductVersionRevision)' == ''">unknown</ProductVersionRevision>
@@ -22,6 +23,8 @@
     <ProductVersionAnnotation Condition="'$(ProductVersionAnnotation)' == ''">unknown</ProductVersionAnnotation>
     <ProductVersion Condition="'$(ProductVersion)' == ''">unknown</ProductVersion>
     <ProductVersionAnnotated Condition="'$(ProductVersionAnnotated)' == ''">unknown</ProductVersionAnnotated>
+    <ProductVersionDescriptiveShort Condition="'$(ProductVersionDescriptiveShort)' == ''">unknown</ProductVersionDescriptiveShort>
+    <ProductVersionDescriptiveLong Condition="'$(ProductVersionDescriptiveLong)' == ''">unknown</ProductVersionDescriptiveLong>
     <GitTag Condition="'$(GitTag)' == ''">unknown</GitTag>
   </PropertyGroup>
 
@@ -29,10 +32,11 @@
   <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitRevParseTask" />
   <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitVersionTagTask" />
   <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitToolCommitCountTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="AssemblyVersionTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="VersionTextTask" />
   <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitDescribeTask" />
   <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitDescribeTagTask" />
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitCurrentBranchTask" />
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="WriteAssemblyVersionFileTask" />
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GenerateVersionTextTask" />
 
   <Target Name="UpdateVersionByGit" BeforeTargets="BeforeBuild">
     <GitShortRevTask LocalPath="$(SolutionDir)">
@@ -58,8 +62,12 @@
     <GitDescribeTask LocalPath="$(SolutionDir)">
       <Output TaskParameter="Text" PropertyName="GitDescribe" />
     </GitDescribeTask>
+    <GitCurrentBranchTask LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Text" PropertyName="GitCurrentBranch" />
+    </GitCurrentBranchTask>
 
     <Message Text="GIT Tag: $(GitVersionTag) ($(GitTagRevision))" />
+    <Message Text="GIT Branch: $(GitCurrentBranch)" />
     <Message Text="GIT Describe: $(GitDescribeTag) ($(GitDescribe))" />
     <Message Text="GIT Revision: $(GitRevision)" />
     <Message Text="GIT Version: $(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitCommitSinceVersion)" Condition="'$(GitVersionAnnotation)'==''" />
@@ -76,39 +84,37 @@
       <GitTag>$(GitVersionTag)</GitTag>
     </PropertyGroup>
 
-    <PropertyGroup>
-      <ProductVersion>$(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitCommitSinceVersion)</ProductVersion>
-      <ProductVersionAnnotated Condition="'$(ProductVersionAnnotation)' != ''">$(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision)-$(GitVersionAnnotation)</ProductVersionAnnotated>
-      <ProductVersionAnnotated Condition="'$(ProductVersionAnnotation)' == ''">$(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision)</ProductVersionAnnotated>
-    </PropertyGroup>
-
-    <VersionTextTask Major="$(ProductVersionMajor)"
+    <GenerateVersionTextTask Major="$(ProductVersionMajor)"
                      Minor="$(ProductVersionMinor)"
                      Revision="$(ProductVersionRevision)"
+                     Branch="$(GitCurrentBranch)"
                      Build="$(ProductVersionBuild)"
                      Commit="$(GitRevision)"
                      Annotation="$(ProductVersionAnnotation)"
                      ChangedSinceTag="$(GitCommitSinceVersion)">
       <Output TaskParameter="Short" PropertyName="ProductVersionShort" />
       <Output TaskParameter="Long" PropertyName="ProductVersionLong" />
-      <Output TaskParameter="Descriptive" PropertyName="ProductVersionDescriptive" />
-    </VersionTextTask>
+      <Output TaskParameter="DescriptiveShort" PropertyName="ProductVersionDescriptiveShort" />
+      <Output TaskParameter="DescriptiveLong" PropertyName="ProductVersionDescriptiveLong" />
+    </GenerateVersionTextTask>
 
     <Message Text="Product Version: $(ProductVersion)" />
     <Message Text="Product Version Short: $(ProductVersionShort)" />
     <Message Text="Product Version Long: $(ProductVersionLong)" />
-    <Message Text="Product Version Descriptive: $(ProductVersionDescriptive)" />
+    <Message Text="Product Version Descriptive Short: $(ProductVersionDescriptiveShort)" />
+    <Message Importance="High" Text="Product Version Descriptive Long: $(ProductVersionDescriptiveLong)" />
     <Message Text="Product Changes Since Version: $(GitCommitSinceVersion) ($(ProductVersionCustom)..$(GitRevision))" />
 
     <PropertyGroup>
       <ProductVersion>$(ProductVersionShort)</ProductVersion>
-      <ProductVersionAnnotated>$(ProductVersionDescriptive)</ProductVersionAnnotated>
+      <ProductVersionAnnotated>$(ProductVersionDescriptiveShort)</ProductVersionAnnotated>
     </PropertyGroup>
     <Error Condition="!Exists('$(VersionFile)')" Text="The version file $(VersionFile) does not exist." />
-    <AssemblyVersionTask
+
+    <WriteAssemblyVersionFileTask
         File="$(VersionFile)"
         Version="$(ProductVersionShort)"
         FileVersion="$(ProductVersionLong)"
-        InfoVersion="$(ProductVersionDescriptive)" />
+        InfoVersion="$(ProductVersionDescriptiveLong)" />
   </Target>
 </Project>
