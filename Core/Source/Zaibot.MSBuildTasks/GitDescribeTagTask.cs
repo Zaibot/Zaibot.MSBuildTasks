@@ -9,7 +9,7 @@ namespace Zaibot.MSBuildTasks
 
         protected override string GenerateCommandLineCommands()
         {
-            return "describe --abbrev=0 --tags";
+            return "describe --match \"*v[0-9]*\" --abbrev=0 --tags";
         }
 
         protected override void HandleOutput(string singleLine)
