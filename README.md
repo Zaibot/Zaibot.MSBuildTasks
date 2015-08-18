@@ -31,7 +31,6 @@ Optional Input
 ZaibotMSBuildTasksPath = $(SolutionDir).build\
 ZaibotMSBuildTasksLib = $(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll
 VersionFile = $(SolutionDir)Includes\$(SolutionName)_Version.cs
-
 ```
 
 ### Use case example 1
@@ -119,9 +118,24 @@ The installer creates a nuspec file if it does not exist yet: ```<ProjectName>.n
 msbuild Solution.sln /t:Rebuild /p:"Configuration=Release"
 ```
 
+When ```Zaibot.MSBuildTasks``` is installed the ```ProductVersionDescriptiveShort``` property will be assigned to the nuspec package.
+
 ### Publishing NuGet packages
 ```
 msbuild Solution.sln /t:Rebuild /p:"Configuration=Release;"
+```
+
+### MSBuild Properties
+Optional Input
+```
+NuGetExePath = $(SolutionDir).nuget\nuget.exe
+NuSpecPath = (empty)
+NuGetSourceUrl = (empty)
+NuGetSourceApiKey = (empty)
+ZaibotMSBuildTasksPath = $(SolutionDir).build\
+ZaibotMsBuildTasks = $(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.targets
+NuSpecPackageVersion = (empty)
+NuSpecPackageFile = (empty)
 ```
 
 ## Uninstall
