@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0240665B-6A46-44A5-B2E2-790613CD6162}</ProjectGuid>
+    <ProjectGuid>{86065FAD-EF3F-4942-ADF1-DC819C5011EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zaibot.MSBuildTasks</RootNamespace>
-    <AssemblyName>Zaibot.MSBuildTasks</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Zaibot.MSBuildTasks.GitVersion</RootNamespace>
+    <AssemblyName>Zaibot.MSBuildTasks.GitVersion</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -40,65 +40,55 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Includes\MSBuildTasks_Product.cs">
-      <Link>Properties\MSBuildTasks_Product.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Includes\MSBuildTasks_Version.cs">
-      <Link>Properties\MSBuildTasks_Version.cs</Link>
-    </Compile>
-    <Compile Include="WriteAssemblyVersionFileTask.cs" />
-    <Compile Include="GitCurrentBranchTask.cs" />
-    <Compile Include="GitDescribeTagTask.cs" />
-    <Compile Include="GitDescribeTask.cs" />
-    <Compile Include="GitRevParseTask.cs" />
-    <Compile Include="GitShortRevTask.cs" />
-    <Compile Include="GitToolBase.cs" />
-    <Compile Include="GitToolCommitCountTask.cs" />
-    <Compile Include="GitVersionTagTask.cs" />
+    <None Include="..\Source\Zaibot.MSBuildTasks\Zaibot.MSBuildTasks.psm1">
+      <Link>Zaibot.MSBuildTasks.psm1</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProductName_Product.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProductName_Version.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Compile Include="SemVerTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToolPathUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Zaibot.MSBuildTasks.psm1">
+    <None Include="Init.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Install.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Uninstall.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Install.ps1">
+    <ZaibotNuGetPack Include="Zaibot.MSBuildTasks.GitVersion.nuspec" />
+    <None Include="Zaibot.MSBuildTasks.GitVersion.props">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Zaibot.MSBuildTasks.props">
+    <None Include="Zaibot.MSBuildTasks.GitVersion.targets">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Zaibot.MSBuildTasks.targets">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <ZaibotNuGetPack Include="Zaibot.MSBuildTasks.nuspec" />
-    <None Include="Init.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="MSBuild.psm1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Zaibot.MSBuildTasks.Readme.txt">
+    <Content Include="Zaibot.MSBuildTasks.GitVersion.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.NuGet.targets" />
+  <Import Project="..\packages\Zaibot.MSBuildTasks.NuGet.0.2.4\build\Zaibot.MSBuildTasks.NuGet.targets" Condition="Exists('..\packages\Zaibot.MSBuildTasks.NuGet.0.2.4\build\Zaibot.MSBuildTasks.NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Zaibot.MSBuildTasks.0.2.3.0-beta\build\Zaibot.MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Zaibot.MSBuildTasks.0.2.3.0-beta\build\Zaibot.MSBuildTasks.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Zaibot.MSBuildTasks.NuGet.0.2.3.0-beta\build\Zaibot.MSBuildTasks.NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Zaibot.MSBuildTasks.NuGet.0.2.3.0-beta\build\Zaibot.MSBuildTasks.NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Zaibot.MSBuildTasks.NuGet.0.2.4\build\Zaibot.MSBuildTasks.NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Zaibot.MSBuildTasks.NuGet.0.2.4\build\Zaibot.MSBuildTasks.NuGet.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

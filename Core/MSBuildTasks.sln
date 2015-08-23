@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F55F1D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaibot.MSBuildTasks.NuGet", "Source\Zaibot.MSBuildTasks.NuGet\Zaibot.MSBuildTasks.NuGet.csproj", "{898E7655-144C-42E1-898A-D6CA3118030A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaibot.MSBuildTasks.GitVersion", "Zaibot.MSBuildTasks.GitVersion\Zaibot.MSBuildTasks.GitVersion.csproj", "{86065FAD-EF3F-4942-ADF1-DC819C5011EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{898E7655-144C-42E1-898A-D6CA3118030A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{898E7655-144C-42E1-898A-D6CA3118030A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{898E7655-144C-42E1-898A-D6CA3118030A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86065FAD-EF3F-4942-ADF1-DC819C5011EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86065FAD-EF3F-4942-ADF1-DC819C5011EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86065FAD-EF3F-4942-ADF1-DC819C5011EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86065FAD-EF3F-4942-ADF1-DC819C5011EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

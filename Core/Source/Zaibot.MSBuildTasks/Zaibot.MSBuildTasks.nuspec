@@ -9,22 +9,17 @@
         <releaseNotes></releaseNotes>
         <language>en-US</language>
         <tags>.NET MSBuild</tags>
-        <projectUrl>http://www.zaibot.net/msbuildtasks/</projectUrl>
-        <licenseUrl>http://www.zaibot.net/msbuildtasks/license</licenseUrl>
+        <projectUrl>https://github.com/Zaibot/Zaibot.MSBuildTasks/</projectUrl>
+        <licenseUrl>https://github.com/Zaibot/Zaibot.MSBuildTasks/blob/master/LICENSE.md</licenseUrl>
     </metadata>
+  
     <files>
       <file src="MSBuild.psm1" target="tools" />
       <file src="Init.ps1" target="tools" />
-      <file src="Install.ps1" target="tools" />
-      <file src="Uninstall.ps1" target="tools" />
-
-      <file src="ProductName_Product.cs" target="tools" />
-      <file src="ProductName_Version.cs" target="tools" />
 
       <file src="Zaibot.MSBuildTasks.dll" target="tools" />
       <file src="Zaibot.MSBuildTasks.pdb" target="tools" />
       <file src="Zaibot.MSBuildTasks.Readme.txt" target="tools" />
       <file src="Zaibot.MSBuildTasks.targets" target="tools" />
-      <file src="Zaibot.MSBuildTasks.targets" target="build" />
     </files>
 </package>

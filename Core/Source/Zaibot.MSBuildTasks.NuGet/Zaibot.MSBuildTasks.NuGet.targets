@@ -1,22 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
-<!--EXTERNAL_PROPERTIES: ProductVersionDescriptiveShort;-->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
-  <PropertyGroup>
-    <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
-    <NuGetExePath Condition="'$(NuGetExePath)' == ''">$(SolutionDir).nuget\nuget.exe</NuGetExePath>
-    <NuSpecPath Condition="'$(NuSpecPath)' == ''">(none)</NuSpecPath>
-    <NuGetSourceUrl Condition="'$(NuGetSourceUrl)' == ''"></NuGetSourceUrl>
-    <NuGetSourceApiKey Condition="'$(NuGetSourceApiKey)' == ''"></NuGetSourceApiKey>
-    <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)' == ''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
-    <ZaibotMsBuildTasks Condition="'$(ZaibotMsBuildTasks)' == ''">$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.targets</ZaibotMsBuildTasks>
-    <NuSpecPackageVersion Condition="'$(NuSpecPackageVersion)' == ''"></NuSpecPackageVersion>
-    <NuSpecPackageFile Condition="'$(NuSpecPackageFile)' == ''"></NuSpecPackageFile>
-  </PropertyGroup>
+  <Import Project="$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.targets" />
+  <Import Project="$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.GitVersion.targets" Condition="EXISTS('$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.GitVersion.targets')" />
+  <Import Project="$(ZaibotMSBuildIncludesPath)Zaibot.MSBuildTasks.NuGet.props" />
 
-  <Import Project="$(ZaibotMsBuildTasks)" Condition="EXISTS('$(ZaibotMsBuildTasks)')" />
-
-  <ItemGroup>
+  <ItemGroup Condition="'$(BuildingInsideVisualStudio)'=='true'">
     <AvailableItemName Include="ZaibotNuGetPack" />
   </ItemGroup>
 
