@@ -12,7 +12,7 @@ function Add-Default-NuSpec() {
 	$nuspecFile = Join-Path $projectDir $nuspecFileName
 
 	if (!(Test-Path $nuspecFile)) {
-		Copy-Item $nuspecSourceFile $nuspecFile -Force | Out-Null
+		Copy-Item $nuspecSourceFile $nuspecFile -Force 
 		Write-Host ("Copied nuspec template, set the build action to ZaibotNuGetPack.")
 	}
 

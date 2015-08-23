@@ -14,11 +14,13 @@ $includeFiles += "Zaibot.MSBuildTasks.NuGet.props"
 
 function Main 
 {
-	Deploy-Solution-Folder("Zaibot.MSBuildTasks.NuGet", $toolsPath, $solution, $buildFolderName, $buildFiles)
-	Add-Solution-Folder("Zaibot.MSBuildTasks.NuGet", $toolsPath, $solution, $buildFolderName, $buildFiles)
+	$solution = Get-Interface $dte.Solution ([EnvDTE80.Solution2])
 
-	Deploy-Solution-Folder("Zaibot.MSBuildTasks.NuGet", $toolsPath, $solution, $includesFolderName, $includeFiles)
-	Add-Solution-Folder("Zaibot.MSBuildTasks.NuGet", $toolsPath, $solution, $includesFolderName, $includeFiles)
+	Deploy-Solution-Folder "Zaibot.MSBuildTasks.NuGet" $toolsPath $solution $buildFolderName $buildFiles
+	Add-Solution-Folder "Zaibot.MSBuildTasks.NuGet" $toolsPath $solution $buildFolderName $buildFiles
+
+	Deploy-Solution-Folder "Zaibot.MSBuildTasks.NuGet" $toolsPath $solution $includesFolderName $includeFiles
+	Add-Solution-Folder "Zaibot.MSBuildTasks.NuGet" $toolsPath $solution $includesFolderName $includeFiles
 }
 
 Main

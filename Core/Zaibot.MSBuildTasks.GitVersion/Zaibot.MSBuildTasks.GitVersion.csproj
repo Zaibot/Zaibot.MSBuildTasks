@@ -48,6 +48,9 @@
       <Link>Zaibot.MSBuildTasks.psm1</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="MSBuild.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="ProductName_Product.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -83,13 +86,8 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Zaibot.MSBuildTasks.NuGet.0.2.4\build\Zaibot.MSBuildTasks.NuGet.targets" Condition="Exists('..\packages\Zaibot.MSBuildTasks.NuGet.0.2.4\build\Zaibot.MSBuildTasks.NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Zaibot.MSBuildTasks.NuGet.0.2.4\build\Zaibot.MSBuildTasks.NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Zaibot.MSBuildTasks.NuGet.0.2.4\build\Zaibot.MSBuildTasks.NuGet.targets'))" />
-  </Target>
+  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
+  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.NuGet.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
