@@ -1,5 +1,14 @@
 # Zaibot.MSBuildTasks
-Automatic assembly version update for C#/msbuild projects based on GIT release labels.
+Automatic assembly version update for C#/MSBuild projects based on GIT release labels.
+
+![alt tag][1]
+[![alt tag][3]][2]
+[![alt tag][4]][2]
+
+  [1]: https://tdgroen.visualstudio.com/DefaultCollection/_apis/public/build/definitions/a301367f-77ba-4672-aac3-60c472b50422/8/badge (VSO Build Status)
+  [2]: https://www.nuget.org/packages/Zaibot.MSBuildTasks/ (NuGet.org Package)
+  [3]: https://img.shields.io/nuget/vpre/Zaibot.MSBuildTasks.svg (NuGet Version)
+  [4]: https://img.shields.io/nuget/dt/Zaibot.MSBuildTasks.svg (NuGet Downloads)
 
 ## Install
 ```ps
