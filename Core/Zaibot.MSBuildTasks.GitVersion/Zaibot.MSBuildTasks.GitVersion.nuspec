@@ -27,5 +27,8 @@
     <file src="Zaibot.MSBuildTasks.GitVersion.pdb" target="tools" />
     <file src="Zaibot.MSBuildTasks.GitVersion.props" target="tools" />
     <file src="Zaibot.MSBuildTasks.GitVersion.targets" target="tools" />
+    
+    <file src="ProductName_Product.cs" target="tools" />
+    <file src="ProductName_Version.cs" target="tools" />
   </files>
 </package>
