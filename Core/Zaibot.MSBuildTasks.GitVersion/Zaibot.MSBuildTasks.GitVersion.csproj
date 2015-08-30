@@ -57,6 +57,12 @@
     <None Include="ProductName_Version.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="..\Includes\MSBuildTasks_Product.cs">
+      <Link>Properties\MSBuildTasks_Product.cs</Link>
+    </Compile>
+    <Compile Include="..\Includes\MSBuildTasks_Version.cs">
+      <Link>Properties\MSBuildTasks_Version.cs</Link>
+    </Compile>
     <Compile Include="SemVerTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -87,6 +93,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
+  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.GitVersion.targets" />
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.NuGet.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
