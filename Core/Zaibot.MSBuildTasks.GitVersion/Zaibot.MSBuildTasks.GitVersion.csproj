@@ -2,6 +2,9 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{86065FAD-EF3F-4942-ADF1-DC819C5011EB}</ProjectGuid>
@@ -44,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Source\Zaibot.MSBuildTasks\Zaibot.MSBuildTasks.psm1">
+    <None Include="..\Zaibot.MSBuildTasks\Zaibot.MSBuildTasks.psm1">
       <Link>Zaibot.MSBuildTasks.psm1</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

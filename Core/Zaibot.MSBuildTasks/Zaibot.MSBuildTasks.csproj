@@ -2,6 +2,9 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0240665B-6A46-44A5-B2E2-790613CD6162}</ProjectGuid>
@@ -43,10 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Includes\MSBuildTasks_Product.cs">
+    <Compile Include="..\Includes\MSBuildTasks_Product.cs">
       <Link>Properties\MSBuildTasks_Product.cs</Link>
     </Compile>
-    <Compile Include="..\..\Includes\MSBuildTasks_Version.cs">
+    <Compile Include="..\Includes\MSBuildTasks_Version.cs">
       <Link>Properties\MSBuildTasks_Version.cs</Link>
     </Compile>
     <Compile Include="WriteAssemblyVersionFileTask.cs" />
@@ -95,6 +98,8 @@
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.GitVersion.targets" />
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.NuGet.targets" />
+  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
+  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.GitVersion.targets" />
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.GitVersion.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

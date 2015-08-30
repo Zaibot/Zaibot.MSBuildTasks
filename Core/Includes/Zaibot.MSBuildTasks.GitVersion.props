@@ -1,0 +1,8 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ZaibotMSBuildTasksGitVersionLib Condition="'$(ZaibotMSBuildTasksGitVersionLib)'==''">$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.GitVersion.dll</ZaibotMSBuildTasksGitVersionLib>
+    <VersionFile Condition="'$(VersionFile)' == ''">$(ZaibotMSBuildIncludesPath)$(SolutionName)_Version.cs</VersionFile>
+    <SemVerSpec Condition="'$(SemVerSpec)' == ''">1.0.0</SemVerSpec>
+    <!--<SemVerSpec Condition="'$(SemVerSpec)' == ''">2.0.0</SemVerSpec>-->
+  </PropertyGroup>
+</Project>
