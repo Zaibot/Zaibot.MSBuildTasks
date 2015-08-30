@@ -33,7 +33,8 @@ function Main
 	Deploy-Solution-File "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName "ProductName_Version.cs" $fileVersion
 	Add-Solution-File "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $fileVersion
 
-	Add-Import("`$(SolutionDir)$buildFolderName\Zaibot.MSBuildTasks.GitVersion.targets")
+	$buildProject = Get-MSBuildProject $project.Name
+	Add-MSBuild-Import($buildProject, "`$(SolutionDir)$buildFolderName\Zaibot.MSBuildTasks.GitVersion.targets")
 }
 
 Main
