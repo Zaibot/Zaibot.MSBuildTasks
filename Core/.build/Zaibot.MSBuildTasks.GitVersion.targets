@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
+    <ZaibotMSBuildIncludesPath Condition="'$(ZaibotMSBuildIncludesPath)' == ''">$(SolutionDir)Includes\</ZaibotMSBuildIncludesPath>
+    <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)' == ''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
+  </PropertyGroup>
+
+  <Import Project="$(ZaibotMSBuildIncludesPath)Zaibot.MSBuildTasks.GitVersion.props" />
+
+  <Import Project="$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.targets" />
+
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksGitVersionLib)" TaskName="SemVerTask" />
+
+  <PropertyGroup>
+    <ZaibotMSBuildTasksPresent>True</ZaibotMSBuildTasksPresent>
+    <GitRevision Condition="'$(GitRevision)' == ''">unknown</GitRevision>
+    <GitVersionMajor Condition="'$(GitVersionMajor)' == ''">unknown</GitVersionMajor>
+    <GitVersionMinor Condition="'$(GitVersionMinor)' == ''">unknown</GitVersionMinor>
+    <GitVersionRevision Condition="'$(GitVersionRevision)' == ''">unknown</GitVersionRevision>
+    <GitVersionBuild Condition="'$(GitVersionBuild)' == ''">unknown</GitVersionBuild>
+    <GitVersionTag Condition="'$(GitVersionTag)' == ''">unknown</GitVersionTag>
+    <GitCommitSinceVersion Condition="'$(GitCommitSinceVersion)' == ''">unknown</GitCommitSinceVersion>
+    <GitCurrentBranch Condition="'$(GitCurrentBranch)' == ''">unknown</GitCurrentBranch>
+    <ProductVersion Condition="'$(ProductVersion)' == ''">unknown</ProductVersion>
+    <ProductVersionShort Condition="'$(ProductVersionShort)' == ''">unknown</ProductVersionShort>
+    <ProductVersionLong Condition="'$(ProductVersionLong)' == ''">unknown</ProductVersionLong>
+    <ProductVersionDescriptiveShort Condition="'$(ProductVersionDescriptiveShort)' == ''">unknown</ProductVersionDescriptiveShort>
+    <ProductVersionDescriptiveLong Condition="'$(ProductVersionDescriptiveLong)' == ''">unknown</ProductVersionDescriptiveLong>
+    <GitTag Condition="'$(GitTag)' == ''">unknown</GitTag>
+  </PropertyGroup>
+
+  <Target Name="UpdateVersionByGit" BeforeTargets="BeforeBuild">
+    <GitShortRevTask LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Revision" PropertyName="GitRevision" />
+    </GitShortRevTask>
+    <GitVersionTagTask LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Major" PropertyName="GitVersionMajor" />
+      <Output TaskParameter="Minor" PropertyName="GitVersionMinor" />
+      <Output TaskParameter="Revision" PropertyName="GitVersionRevision" />
+      <Output TaskParameter="Build" PropertyName="GitVersionBuild" />
+      <Output TaskParameter="Tag" PropertyName="GitVersionTag" />
+      <Output TaskParameter="Annotation" PropertyName="GitVersionAnnotation" />
+    </GitVersionTagTask>
+    <GitRevParseTask LocalPath="$(SolutionDir)" What="$(GitVersionTag)">
+      <Output TaskParameter="Revision" PropertyName="GitTagRevision" />
+    </GitRevParseTask>
+    <GitToolCommitCountTask LocalPath="$(SolutionDir)" Since="$(GitVersionTag)">
+      <Output TaskParameter="Count" PropertyName="GitCommitSinceVersion" />
+    </GitToolCommitCountTask>
+    <GitDescribeTagTask LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Text" PropertyName="GitDescribeTag" />
+    </GitDescribeTagTask>
+    <GitDescribeTask LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Text" PropertyName="GitDescribe" />
+    </GitDescribeTask>
+    <GitCurrentBranchTask LocalPath="$(SolutionDir)">
+      <Output TaskParameter="Text" PropertyName="GitCurrentBranch" />
+    </GitCurrentBranchTask>
+
+    <Message Text="GIT Tag: $(GitVersionTag) ($(GitTagRevision))" />
+    <Message Text="GIT Branch: $(GitCurrentBranch)" />
+    <Message Text="GIT Describe: $(GitDescribeTag) ($(GitDescribe))" />
+    <Message Text="GIT Revision: $(GitRevision)" />
+    <Message Text="GIT Version: $(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitCommitSinceVersion)" Condition="'$(GitVersionAnnotation)'==''" />
+    <Message Text="GIT Version: $(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitCommitSinceVersion)-$(GitVersionAnnotation)" Condition="'$(GitVersionAnnotation)'!=''" />
+    <Message Text="GIT Following Commits: $(GitCommitSinceVersion)" />
+
+    <SemVerTask SemVerSpec="$(SemVerSpec)"
+                Major="$(GitVersionMajor)"
+                             Minor="$(GitVersionMinor)"
+                             Revision="$(GitVersionRevision)"
+                             Build="$(GitVersionBuild)"
+                             Branch="$(GitCurrentBranch)"
+                             Commit="$(GitRevision)"
+                             Annotation="$(GitVersionAnnotation)"
+                             ChangedSinceTag="$(GitCommitSinceVersion)">
+      <Output TaskParameter="Short" PropertyName="ProductVersionShort" />
+      <Output TaskParameter="Long" PropertyName="ProductVersionLong" />
+      <Output TaskParameter="DescriptiveShort" PropertyName="ProductVersionDescriptiveShort" />
+      <Output TaskParameter="DescriptiveLong" PropertyName="ProductVersionDescriptiveLong" />
+    </SemVerTask>
+
+    <Message Text="Product Version Short: $(ProductVersionShort)" />
+    <Message Text="Product Version Long: $(ProductVersionLong)" />
+    <Message Text="Product Version Descriptive Short: $(ProductVersionDescriptiveShort)" />
+    <Message Importance="High" Text="Product Version Descriptive Long: $(ProductVersionDescriptiveLong)" />
+    <Message Text="Product Changes Since Version: $(GitCommitSinceVersion) ($(GitTagRevision)..$(GitRevision))" />
+
+    <Error Condition="!Exists('$(VersionFile)')" Text="The version file $(VersionFile) does not exist." />
+
+    <WriteAssemblyVersionFileTask File="$(VersionFile)"
+                                  Version="$(ProductVersionShort)"
+                                  FileVersion="$(ProductVersionLong)"
+                                  InfoVersion="$(ProductVersionDescriptiveLong)" />
+  </Target>
+</Project>

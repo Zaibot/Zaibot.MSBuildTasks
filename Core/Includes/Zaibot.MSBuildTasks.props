@@ -1,0 +1,8 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)'==''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
+    <ZaibotMSBuildTasksLib Condition="'$(ZaibotMSBuildTasksLib)'==''">$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll</ZaibotMSBuildTasksLib>
+    
+    <ZaibotMSBuildIncludesPath Condition="'$(ZaibotMSBuildIncludesPath)'==''">$(SolutionDir)Includes\</ZaibotMSBuildIncludesPath>
+  </PropertyGroup>
+</Project>
