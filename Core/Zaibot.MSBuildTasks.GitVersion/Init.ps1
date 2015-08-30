@@ -18,18 +18,20 @@ function Main
 {
 	$solution = Get-Interface $dte.Solution ([EnvDTE80.Solution2])
 	$productName = Get-Solution-Name $solution
+	$fileProduct = "$productName" + "_Product.cs"
+	$fileVersion = "$productName" + "_Version.cs"
 
 	Deploy-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $buildFolderName $buildFiles
-	Add-Solution-Folder"Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $buildFolderName $buildFiles
+	Add-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $buildFolderName $buildFiles
 
 	Deploy-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $includeFiles
-	Add-Solution-Folder"Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $includeFiles
+	Add-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $includeFiles
 	
-	Deploy-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName "ProductName_Product.cs" ("$productName" + "_Product.cs")
-	Add-Solution-Folder"Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName ("$productName" + "_Product.cs")
+	Deploy-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName "ProductName_Product.cs" $fileProduct
+	Add-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $fileProduct
 
-	Deploy-Solution-File "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName "ProductName_Version.cs" ("$productName" + "_Version.cs")
-	Add-Solution-File"Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName ("$productName" + "_Version.cs")
+	Deploy-Solution-File "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName "ProductName_Version.cs" $fileVersion
+	Add-Solution-File "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $fileVersion
 
 	Add-Import("`$(SolutionDir)$buildFolderName\Zaibot.MSBuildTasks.GitVersion.targets")
 }
