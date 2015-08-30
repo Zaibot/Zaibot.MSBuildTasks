@@ -110,13 +110,5 @@ function Add-MSBuild-Import($msbuildProject, $path) {
         $buildProject.Save() | Out-Null
     }
 }
-function Add-MSBuild-Import($msbuildProject, $path) {
-	Write-Host "Add-MSBuild-Import"
-    $import = $msbuildProject.Xml.Imports | Where { $_.Project -eq $path }
-    if ($import) {
-        $import = $msbuildProject.Xml.AddImport($path)
-        $buildProject.Save() | Out-Null
-    }
-}
 
 Export-ModuleMember Deploy-Solution-Folder, Deploy-Solution-File, Add-Solution-Folder, Add-Solution-File, Get-Solution-Dir, Get-Solution-Name, Create-Solution-Folder, Add-MSBuild-Import
