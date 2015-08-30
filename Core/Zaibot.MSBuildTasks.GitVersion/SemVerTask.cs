@@ -63,14 +63,17 @@ namespace Zaibot.MSBuildTasks
         {
             var branch = GetBranchName();
 
-            var changesCommitDot = ChangedSinceTag == 0 ? "" : $"-{Commit}";
-            var annotation = string.IsNullOrEmpty(Annotation) ? "" : $"-{Annotation}";
-            var versionBranch = string.IsNullOrEmpty(branch) ? "" : $" {branch}";
+            var shortTagRev = ChangedSinceTag == 0 ? "" : $"-rev{ChangedSinceTag:000}";
+            var longTagRev = ChangedSinceTag == 0 ? "" : $" revision {ChangedSinceTag}";
+            var shortTagCommit = ChangedSinceTag == 0 ? "" : $"-{Commit}";
+            var longTagCommit = ChangedSinceTag == 0 ? "" : $" ({Commit})";
+            var tagAnnotation = string.IsNullOrEmpty(Annotation) ? "" : $"-{Annotation}";
+            var buildBranch = string.IsNullOrEmpty(branch) ? "" : $" {branch}";
 
             Short = $"{Major}.{Minor}";
             Long = $"{Major}.{Minor}.{Revision}.0";
-            DescriptiveShort = $"{Major}.{Minor}.{Revision}{annotation}{changesCommitDot}";
-            DescriptiveLong = $"{Major}.{Minor}.{Revision}{annotation}{changesCommitDot}{versionBranch}";
+            DescriptiveShort = $"{Major}.{Minor}.{Revision}{tagAnnotation}{shortTagRev}{shortTagCommit}";
+            DescriptiveLong = $"{Major}.{Minor}.{Revision}{tagAnnotation}{buildBranch}{longTagRev}{longTagCommit}";
 
             return true;
         }
@@ -79,14 +82,17 @@ namespace Zaibot.MSBuildTasks
         {
             var branch = GetBranchName();
 
-            var changesCommitDot = ChangedSinceTag == 0 ? "" : $".{Commit}";
-            var annotation = string.IsNullOrEmpty(Annotation) ? "" : $"-{Annotation}";
-            var versionBranch = string.IsNullOrEmpty(branch) ? "" : $" {branch}";
+            var shortTagRev = ChangedSinceTag == 0 ? "" : $".{ChangedSinceTag}";
+            var longTagRev = ChangedSinceTag == 0 ? "" : $" revision {ChangedSinceTag}";
+            var shortTagCommit = ChangedSinceTag == 0 ? "" : $"-c{Commit}";
+            var longTagCommit = ChangedSinceTag == 0 ? "" : $" ({Commit})";
+            var tagAnnotation = string.IsNullOrEmpty(Annotation) ? "" : $"-{Annotation}";
+            var buildBranch = string.IsNullOrEmpty(branch) ? "" : $" {branch}";
 
             Short = $"{Major}.{Minor}";
             Long = $"{Major}.{Minor}.{Revision}.0";
-            DescriptiveShort = $"{Major}.{Minor}.{Revision}{annotation}{changesCommitDot}";
-            DescriptiveLong = $"{Major}.{Minor}.{Revision}{annotation}{changesCommitDot}{versionBranch}";
+            DescriptiveShort = $"{Major}.{Minor}.{Revision}{tagAnnotation}{shortTagRev}{shortTagCommit}";
+            DescriptiveLong = $"{Major}.{Minor}.{Revision}{tagAnnotation}{buildBranch}{longTagRev}{longTagCommit}";
 
             return true;
         }
