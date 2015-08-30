@@ -1,8 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+  <PropertyGroup>
+    <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
+    <ZaibotMSBuildIncludesPath Condition="'$(ZaibotMSBuildIncludesPath)' == ''">$(SolutionDir)Includes\</ZaibotMSBuildIncludesPath>
+    <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)' == ''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
+  </PropertyGroup>
+
+  <Import Project="$(ZaibotMSBuildIncludesPath)Zaibot.MSBuildTasks.NuGet.props" />
+
   <Import Project="$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.targets" />
   <Import Project="$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.GitVersion.targets" Condition="EXISTS('$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.GitVersion.targets')" />
-  <Import Project="$(ZaibotMSBuildIncludesPath)Zaibot.MSBuildTasks.NuGet.props" />
 
   <ItemGroup Condition="'$(BuildingInsideVisualStudio)'=='true'">
     <AvailableItemName Include="ZaibotNuGetPack" />
