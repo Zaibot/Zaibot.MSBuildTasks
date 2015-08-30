@@ -191,3 +191,7 @@ ModelManifest.xml
 .vs/
 Output/
 packages/
+
+# Used for local nuget package builds
+Core/LocalDiskBuild.cmd
+Core/Update.cmd

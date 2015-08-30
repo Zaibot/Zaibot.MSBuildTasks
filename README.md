@@ -1,9 +1,18 @@
-# Zaibot.MSBuildTasks
-Automatic assembly version update for C#/msbuild projects based on GIT release labels.
+# Zaibot.MSBuildTasks.GitVersion
+Automatic assembly version update for C#/MSBuild projects based on GIT release labels.
+
+![alt tag][1]
+[![alt tag][3]][2]
+[![alt tag][4]][2]
+
+  [1]: https://tdgroen.visualstudio.com/DefaultCollection/_apis/public/build/definitions/a301367f-77ba-4672-aac3-60c472b50422/8/badge (VSO Build Status)
+  [2]: https://www.nuget.org/packages/Zaibot.MSBuildTasks.GitVersion/ (NuGet.org Package)
+  [3]: https://img.shields.io/nuget/vpre/Zaibot.MSBuildTasks.GitVersion.svg (NuGet Version)
+  [4]: https://img.shields.io/nuget/dt/Zaibot.MSBuildTasks.GitVersion.svg (NuGet Downloads)
 
 ## Install
 ```ps
-Install-Package Zaibot.MSBuildTasks
+Install-Package Zaibot.MSBuildTasks.GitVersion
 ```
 
 The installer creates a folder in the solution folder called Includes. Two files are created: ```<ProductName>_Product.cs``` and ```<ProductName>_Version.cs```.
@@ -30,6 +39,7 @@ Optional Input
 ```
 ZaibotMSBuildTasksPath = $(SolutionDir).build\
 ZaibotMSBuildTasksLib = $(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll
+ZaibotMSBuildTasksGitVersionLib = $(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.GitVersion.dll
 VersionFile = $(SolutionDir)Includes\$(SolutionName)_Version.cs
 ```
 
@@ -94,7 +104,7 @@ Version Short: 0.1 Version Long: 0.1.0.0 Descriptive Long: 0.1-beta.1-commithash
 
 ## Uninstall
 ```ps
-Uninstall-Package Zaibot.MSBuildTasks
+Uninstall-Package Zaibot.MSBuildTasks.GitVersion
 ```
 The uninstaller does not remove the ```.build\Zaibot.MSBuildTasks*.*``` targets or version include files.
 
@@ -134,6 +144,7 @@ NuGetSourceUrl = (empty)
 NuGetSourceApiKey = (empty)
 ZaibotMSBuildTasksPath = $(SolutionDir).build\
 ZaibotMsBuildTasks = $(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.targets
+ZaibotMSBuildTasksLib = $(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll
 NuSpecPackageVersion = (empty)
 NuSpecPackageFile = (empty)
 ```

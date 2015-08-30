@@ -1,10 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)'==''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
-    <ZaibotMSBuildTasksLib>$([MSBUILD]::Unescape($(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.dll))</ZaibotMSBuildTasksLib>
-    <VersionFile Condition="'$(VersionFile)' == ''">$(SolutionDir)Includes\$(SolutionName)_Version.cs</VersionFile>
+    <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
+    <ZaibotMSBuildIncludesPath Condition="'$(ZaibotMSBuildIncludesPath)' == ''">$(SolutionDir)Includes\</ZaibotMSBuildIncludesPath>
+    <ZaibotMSBuildTasksPath Condition="'$(ZaibotMSBuildTasksPath)' == ''">$(SolutionDir).build\</ZaibotMSBuildTasksPath>
   </PropertyGroup>
+
+  <Import Project="$(ZaibotMSBuildIncludesPath)Zaibot.MSBuildTasks.GitVersion.props" />
+
+  <Import Project="$(ZaibotMSBuildTasksPath)Zaibot.MSBuildTasks.targets" />
+
+  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksGitVersionLib)" TaskName="SemVerTask" />
 
   <PropertyGroup>
     <ZaibotMSBuildTasksPresent>True</ZaibotMSBuildTasksPresent>
@@ -23,16 +29,6 @@
     <ProductVersionDescriptiveLong Condition="'$(ProductVersionDescriptiveLong)' == ''">unknown</ProductVersionDescriptiveLong>
     <GitTag Condition="'$(GitTag)' == ''">unknown</GitTag>
   </PropertyGroup>
-
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitShortRevTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitRevParseTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitVersionTagTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitToolCommitCountTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitDescribeTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitDescribeTagTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GitCurrentBranchTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="WriteAssemblyVersionFileTask" />
-  <UsingTask AssemblyFile="$(ZaibotMSBuildTasksLib)" TaskName="GenerateVersionTextTask" />
 
   <Target Name="UpdateVersionByGit" BeforeTargets="BeforeBuild">
     <GitShortRevTask LocalPath="$(SolutionDir)">
@@ -70,7 +66,8 @@
     <Message Text="GIT Version: $(GitVersionMajor).$(GitVersionMinor).$(GitVersionRevision).$(GitCommitSinceVersion)-$(GitVersionAnnotation)" Condition="'$(GitVersionAnnotation)'!=''" />
     <Message Text="GIT Following Commits: $(GitCommitSinceVersion)" />
 
-    <GenerateVersionTextTask Major="$(GitVersionMajor)"
+    <SemVerTask SemVerSpec="$(SemVerSpec)"
+                Major="$(GitVersionMajor)"
                              Minor="$(GitVersionMinor)"
                              Revision="$(GitVersionRevision)"
                              Build="$(GitVersionBuild)"
@@ -82,7 +79,7 @@
       <Output TaskParameter="Long" PropertyName="ProductVersionLong" />
       <Output TaskParameter="DescriptiveShort" PropertyName="ProductVersionDescriptiveShort" />
       <Output TaskParameter="DescriptiveLong" PropertyName="ProductVersionDescriptiveLong" />
-    </GenerateVersionTextTask>
+    </SemVerTask>
 
     <Message Text="Product Version Short: $(ProductVersionShort)" />
     <Message Text="Product Version Long: $(ProductVersionLong)" />

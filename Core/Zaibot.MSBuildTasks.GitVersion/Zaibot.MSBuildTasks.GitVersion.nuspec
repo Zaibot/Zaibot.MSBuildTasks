@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- TODO: set build action of this nuspec to ZaibotNuGetPack -->
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Zaibot.MSBuildTasks.GitVersion</id>
+    <version>$version$</version>
+    <authors>Zaibot Programs</authors>
+    <description>Package Description</description>
+    <releaseNotes></releaseNotes>
+    <language>en-US</language>
+    <tags>.NET MSBuild GIT SemVer SemVer-2.0.0</tags>
+    <projectUrl>https://github.com/Zaibot/Zaibot.MSBuildTasks/</projectUrl>
+    <licenseUrl>https://github.com/Zaibot/Zaibot.MSBuildTasks/blob/master/LICENSE.md</licenseUrl>
+    <dependencies>
+      <dependency id="Zaibot.MSBuildTasks" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Init.ps1" target="tools" />
+    <file src="Install.ps1" target="tools" />
+    <file src="Uninstall.ps1" target="tools" />
+
+    <file src="MSBuild.psm1" target="tools" />
+    <file src="Zaibot.MSBuildTasks.psm1" target="tools" />
+
+    <file src="Zaibot.MSBuildTasks.GitVersion.dll" target="tools" />
+    <file src="Zaibot.MSBuildTasks.GitVersion.pdb" target="tools" />
+    <file src="Zaibot.MSBuildTasks.GitVersion.props" target="tools" />
+    <file src="Zaibot.MSBuildTasks.GitVersion.targets" target="tools" />
+  </files>
+</package>

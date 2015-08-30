@@ -12,7 +12,7 @@ function Add-Default-NuSpec() {
 	$nuspecFile = Join-Path $projectDir $nuspecFileName
 
 	if (!(Test-Path $nuspecFile)) {
-		Copy-Item $nuspecSourceFile $nuspecFile -Force | Out-Null
+		Copy-Item $nuspecSourceFile $nuspecFile -Force 
 		Write-Host ("Copied nuspec template, set the build action to ZaibotNuGetPack.")
 	}
 
@@ -24,6 +24,9 @@ function Add-Default-NuSpec() {
 
 function Main 
 {
+	$buildProject = Get-MSBuildProject $project.Name
+    Add-MSBuild-Import($buildProject, "`$(SolutionDir)\.build\Zaibot.MSBuildTasks.NuGet.targets")
+
 	Add-Default-NuSpec
 }
 

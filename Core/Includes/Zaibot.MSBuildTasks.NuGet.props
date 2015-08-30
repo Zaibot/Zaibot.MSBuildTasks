@@ -1,0 +1,13 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir>
+    <NuGetExePath Condition="'$(NuGetExePath)' == ''">$(SolutionDir).nuget\nuget.exe</NuGetExePath>
+    <NuSpecPath Condition="'$(NuSpecPath)' == ''">(none)</NuSpecPath>
+    <NuGetSourceUrl Condition="'$(NuGetSourceUrl)' == ''"></NuGetSourceUrl>
+    <NuGetSourceApiKey Condition="'$(NuGetSourceApiKey)' == ''"></NuGetSourceApiKey>
+    <ZaibotNuGetPackAtBuild Condition="'$(ZaibotNuGetPackAtBuild)' == '' AND '$(Configuration)' == 'Release'">True</ZaibotNuGetPackAtBuild>
+    <ZaibotNuGetPublishAtBuild Condition="'$(ZaibotNuGetPublishAtBuild)' == '' AND '$(Configuration)' == 'Release'">True</ZaibotNuGetPublishAtBuild>
+    <NuSpecPackageVersion Condition="'$(NuSpecPackageVersion)' == ''"></NuSpecPackageVersion>
+    <NuSpecPackageFile Condition="'$(NuSpecPackageFile)' == ''"></NuSpecPackageFile>
+  </PropertyGroup>
+</Project>

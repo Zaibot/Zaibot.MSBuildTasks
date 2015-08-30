@@ -5,16 +5,25 @@
     <id>$projectName$</id>
     <version>$version$</version>
     <authors>Acme Company</authors>
-    <description>Package Description</description>
-    <releaseNotes></releaseNotes>
+    <owners>Wile E. Coyote</owners>
     <language>en-US</language>
     <tags></tags>
     <projectUrl></projectUrl>
     <licenseUrl></licenseUrl>
-    <dependencies></dependencies>
+
+    <description>
+      Package Description
+    </description>
+    <!--<summary></summary>-->
+    <!--<releaseNotes></releaseNotes>-->
+    
+    <dependencies>
+      <!--<dependency id="" />-->
+    </dependencies>
   </metadata>
+  
   <files>
-    <file src="*.dll" target="bin" />
-    <file src="*.pdb" target="bin" />
+    <file src="*.dll" target="lib" />
+    <file src="*.pdb" target="lib" />
   </files>
 </package>

@@ -3,12 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaibot.MSBuildTasks", "Source\Zaibot.MSBuildTasks\Zaibot.MSBuildTasks.csproj", "{0240665B-6A46-44A5-B2E2-790613CD6162}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaibot.MSBuildTasks", "Zaibot.MSBuildTasks\Zaibot.MSBuildTasks.csproj", "{0240665B-6A46-44A5-B2E2-790613CD6162}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Includes", "Includes", "{DE6151EF-5FED-4431-96E1-A5BD23CA3F54}"
 	ProjectSection(SolutionItems) = preProject
 		Includes\MSBuildTasks_Product.cs = Includes\MSBuildTasks_Product.cs
 		Includes\MSBuildTasks_Version.cs = Includes\MSBuildTasks_Version.cs
+		Includes\Zaibot.MSBuildTasks.GitVersion.props = Includes\Zaibot.MSBuildTasks.GitVersion.props
+		Includes\Zaibot.MSBuildTasks.NuGet.props = Includes\Zaibot.MSBuildTasks.NuGet.props
+		Includes\Zaibot.MSBuildTasks.props = Includes\Zaibot.MSBuildTasks.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F8970E7E-ABBB-44A5-BFE4-D1489B9A87AC}"
@@ -19,13 +22,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F55F1DE2-7783-43AF-8B69-F768335EA00B}"
 	ProjectSection(SolutionItems) = preProject
 		.build\Zaibot.MSBuildTasks.dll = .build\Zaibot.MSBuildTasks.dll
+		.build\Zaibot.MSBuildTasks.GitVersion.dll = .build\Zaibot.MSBuildTasks.GitVersion.dll
+		.build\Zaibot.MSBuildTasks.GitVersion.targets = .build\Zaibot.MSBuildTasks.GitVersion.targets
 		.build\Zaibot.MSBuildTasks.NuGet.Readme.txt = .build\Zaibot.MSBuildTasks.NuGet.Readme.txt
 		.build\Zaibot.MSBuildTasks.NuGet.targets = .build\Zaibot.MSBuildTasks.NuGet.targets
 		.build\Zaibot.MSBuildTasks.Readme.txt = .build\Zaibot.MSBuildTasks.Readme.txt
 		.build\Zaibot.MSBuildTasks.targets = .build\Zaibot.MSBuildTasks.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaibot.MSBuildTasks.NuGet", "Source\Zaibot.MSBuildTasks.NuGet\Zaibot.MSBuildTasks.NuGet.csproj", "{898E7655-144C-42E1-898A-D6CA3118030A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaibot.MSBuildTasks.NuGet", "Zaibot.MSBuildTasks.NuGet\Zaibot.MSBuildTasks.NuGet.csproj", "{898E7655-144C-42E1-898A-D6CA3118030A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaibot.MSBuildTasks.GitVersion", "Zaibot.MSBuildTasks.GitVersion\Zaibot.MSBuildTasks.GitVersion.csproj", "{86065FAD-EF3F-4942-ADF1-DC819C5011EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +48,10 @@ Global
 		{898E7655-144C-42E1-898A-D6CA3118030A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{898E7655-144C-42E1-898A-D6CA3118030A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{898E7655-144C-42E1-898A-D6CA3118030A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86065FAD-EF3F-4942-ADF1-DC819C5011EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86065FAD-EF3F-4942-ADF1-DC819C5011EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86065FAD-EF3F-4942-ADF1-DC819C5011EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86065FAD-EF3F-4942-ADF1-DC819C5011EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
