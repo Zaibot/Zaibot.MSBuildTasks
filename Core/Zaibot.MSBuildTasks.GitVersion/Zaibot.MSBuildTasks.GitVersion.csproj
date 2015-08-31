@@ -90,7 +90,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Zaibot.MSBuildTasks.GitVersion.txt">
+    <Content Include="Zaibot.MSBuildTasks.GitVersion.Readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
