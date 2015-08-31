@@ -1,9 +1,9 @@
 // ----------------------------------------
 // 
-//   Core
+//   MSBuildTasks
 //   Copyright (c) 2015 Zaibot Programs
 //   
-//   Creation: 2015-07-12
+//   Creation: 2015-08-30
 //     Author: Tobias de Groen
 //   Location: Arnhem, The Netherlands
 // 

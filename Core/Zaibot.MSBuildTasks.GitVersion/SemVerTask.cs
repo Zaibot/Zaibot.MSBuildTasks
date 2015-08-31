@@ -49,57 +49,57 @@ namespace Zaibot.MSBuildTasks
             {
                 case null:
                 case "1.0.0":
-                    return ExecuteSpec100();
+                    return this.ExecuteSpec100();
 
                 case "2.0.0":
-                    return ExecuteSpec200();
+                    return this.ExecuteSpec200();
 
                 default:
-                    throw new Exception("SemVer \"" + SemVerSpec + "\" is not supported. Use: \"1.0.0\" or \"2.0.0\".");
+                    throw new Exception("SemVer \"" + this.SemVerSpec + "\" is not supported. Use: \"1.0.0\" or \"2.0.0\".");
             }
         }
 
         private bool ExecuteSpec100()
         {
-            var branch = GetBranchName();
+            var branch = this.GetBranchName();
 
-            var shortTagRev = ChangedSinceTag == 0 ? "" : $"-rev{ChangedSinceTag:000}";
-            var longTagRev = ChangedSinceTag == 0 ? "" : $" revision {ChangedSinceTag}";
-            var shortTagCommit = ChangedSinceTag == 0 ? "" : $"-{Commit}";
-            var longTagCommit = ChangedSinceTag == 0 ? "" : $" ({Commit})";
-            var tagAnnotation = string.IsNullOrEmpty(Annotation) ? "" : $"-{Annotation}";
+            var shortTagRev = this.ChangedSinceTag == 0 ? "" : $"-rev{this.ChangedSinceTag:000}";
+            var longTagRev = this.ChangedSinceTag == 0 ? "" : $" revision {this.ChangedSinceTag}";
+            var shortTagCommit = this.ChangedSinceTag == 0 ? "" : $"-{this.Commit}";
+            var longTagCommit = this.ChangedSinceTag == 0 ? "" : $" ({this.Commit})";
+            var tagAnnotation = string.IsNullOrEmpty(this.Annotation) ? "" : $"-{this.Annotation}";
             var buildBranch = string.IsNullOrEmpty(branch) ? "" : $" {branch}";
 
-            Short = $"{Major}.{Minor}";
-            Long = $"{Major}.{Minor}.{Revision}.0";
-            DescriptiveShort = $"{Major}.{Minor}.{Revision}{tagAnnotation}{shortTagRev}{shortTagCommit}";
-            DescriptiveLong = $"{Major}.{Minor}.{Revision}{tagAnnotation}{buildBranch}{longTagRev}{longTagCommit}";
+            this.Short = $"{this.Major}.{this.Minor}";
+            this.Long = $"{this.Major}.{this.Minor}.{this.Revision}.0";
+            this.DescriptiveShort = $"{this.Major}.{this.Minor}.{this.Revision}{tagAnnotation}{shortTagRev}{shortTagCommit}";
+            this.DescriptiveLong = $"{this.Major}.{this.Minor}.{this.Revision}{tagAnnotation}{buildBranch}{longTagRev}{longTagCommit}";
 
             return true;
         }
 
         private bool ExecuteSpec200()
         {
-            var branch = GetBranchName();
+            var branch = this.GetBranchName();
 
-            var shortTagRev = ChangedSinceTag == 0 ? "" : $".{ChangedSinceTag}";
-            var longTagRev = ChangedSinceTag == 0 ? "" : $" revision {ChangedSinceTag}";
-            var shortTagCommit = ChangedSinceTag == 0 ? "" : $"-c{Commit}";
-            var longTagCommit = ChangedSinceTag == 0 ? "" : $" ({Commit})";
-            var tagAnnotation = string.IsNullOrEmpty(Annotation) ? "" : $"-{Annotation}";
+            var shortTagRev = this.ChangedSinceTag == 0 ? "" : $".{this.ChangedSinceTag}";
+            var longTagRev = this.ChangedSinceTag == 0 ? "" : $" revision {this.ChangedSinceTag}";
+            var shortTagCommit = this.ChangedSinceTag == 0 ? "" : $"-c{this.Commit}";
+            var longTagCommit = this.ChangedSinceTag == 0 ? "" : $" ({this.Commit})";
+            var tagAnnotation = string.IsNullOrEmpty(this.Annotation) ? "" : $"-{this.Annotation}";
             var buildBranch = string.IsNullOrEmpty(branch) ? "" : $" {branch}";
 
-            Short = $"{Major}.{Minor}";
-            Long = $"{Major}.{Minor}.{Revision}.0";
-            DescriptiveShort = $"{Major}.{Minor}.{Revision}{tagAnnotation}{shortTagRev}{shortTagCommit}";
-            DescriptiveLong = $"{Major}.{Minor}.{Revision}{tagAnnotation}{buildBranch}{longTagRev}{longTagCommit}";
+            this.Short = $"{this.Major}.{this.Minor}";
+            this.Long = $"{this.Major}.{this.Minor}.{this.Revision}.0";
+            this.DescriptiveShort = $"{this.Major}.{this.Minor}.{this.Revision}{tagAnnotation}{shortTagRev}{shortTagCommit}";
+            this.DescriptiveLong = $"{this.Major}.{this.Minor}.{this.Revision}{tagAnnotation}{buildBranch}{longTagRev}{longTagCommit}";
 
             return true;
         }
 
         private string GetBranchName()
         {
-            var branch = Branch;
+            var branch = this.Branch;
             switch (branch)
             {
                 case "master":

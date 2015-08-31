@@ -1,9 +1,9 @@
 // ----------------------------------------
 // 
-//   StateLogic
+//   MSBuildTasks
 //   Copyright (c) 2015 Zaibot Programs
 //   
-//   Creation: 2015-07-11
+//   Creation: 2015-08-16
 //     Author: Tobias de Groen
 //   Location: Arnhem, The Netherlands
 // 
