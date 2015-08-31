@@ -1,0 +1,5 @@
+﻿Import the target into the build by importing:
+  <Import Project="$(SolutionDir)\.build\Zaibot.MSBuildTasks.targets" />
+
+After:
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
