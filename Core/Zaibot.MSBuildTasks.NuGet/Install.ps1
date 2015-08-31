@@ -17,7 +17,8 @@ function Add-Default-NuSpec() {
 	}
 
 	# Add default nuget to project.
-	$file = $project.ProjectItems.AddFromFile($nuspecFile).Open()
+	$file = Add-ProjectItemFromFile $project.ProjectItems $nuspecFile
+	$file.Open() | Out-Null
 	$file.Document.Activate()
 	$file.Document.ReplaceText("`$projectName`$", "$projectName") | Out-Null
 }

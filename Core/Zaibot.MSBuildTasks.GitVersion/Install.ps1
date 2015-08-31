@@ -3,17 +3,22 @@
 Import-Module (Join-Path $toolsPath "MSBuild.psm1")
 Import-Module (Join-Path $toolsPath "Zaibot.MSBuildTasks.psm1")
 
+
 function Add-Solution-ProductVersionInclude($solution, $project, $solProdFile, $solVerFile) {
 	# Open product include.
-	(Create-Solution-Folder $solution "Includes").Item($solProdFile).Open().Activate() | Out-Null
+	$solIncludes = Create-Solution-Folder $solution "Includes"
+	$solIncludes.ProjectItems.Item($solProdFile).Open().Activate() | Out-Null
 
 	# Register includes with projects.
-	$propertiesFolder = $project.ProjectItems.Item('Properties');
-	$propertiesFolder.ProjectItems.AddFromFile($solProdFile) | Out-Null
-	$propertiesFolder.ProjectItems.AddFromFile($solVerFile) | Out-Null
+	$propertiesItems = $project.ProjectItems.Item('Properties').ProjectItems;
+	
+	Add-ProjectItemFromFile $propertiesItems $solProdFile | Out-Null
+	Add-ProjectItemFromFile $propertiesItems $solVerFile | Out-Null
 
-	$assemblyInfo = $propertiesFolder.Item("AssemblyInfo.cs").Open()
-	Open-AssemblyInfo-ForEdit($assemblyInfo)
+	$assemblyVersionFile = $propertiesItems.Item("AssemblyInfo.cs")
+	if ($assemblyVersionFile) { 
+		Open-AssemblyInfo-ForEdit($assemblyVersionFile)
+	}
 }
 
 function Open-AssemblyInfo-ForEdit($assemblyInfo) {

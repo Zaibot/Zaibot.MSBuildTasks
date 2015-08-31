@@ -69,16 +69,23 @@ Function Copy-Tool-File($sourceFolder, $targetFolder, $filename) {
 	Copy-Item $filePath $targetFolder -Force | Out-Null
 }
 
+function Add-ProjectItemFromFile($projectItems, $path) {
+	Write-Host "Add-ProjectItemFromFile $path"
+	$filename = Split-Path $path -Leaf
+	$file = $projectItems | Where { $_.Name -eq $filename }
+	if (!$file) {
+		Write-Host "Adding $filename"
+		$file = $projectItems.AddFromFile($path)
+	} else {
+		Write-Host "Skipping $filename"
+	}
+	return $file
+}
+
 Function Add-Tool-File($projectItems, $targetFolder, $filename) {
 	Write-Host "Add-Tool-File"
-	$exists = !!($projectItems | Where { $_.Name -eq $filename })
-	if (!$exists) {
-		$targetsPath = Join-Path $targetFolder $filename
-		Write-Host "Adding $targetsPath"
-		$projectItems.AddFromFile($targetsPath) | Out-Null
-	} else {
-		Write-Host "Skipping $targetsPath"
-	}
+	$targetsPath = Join-Path $targetFolder $filename
+	Add-ProjectItemFromFile $projectItems $targetsPath | Out-Null
 }
 
 function Get-Solution-Dir($solution) {
@@ -131,7 +138,7 @@ function Add-MSBuild-Import($msbuildProject, $path, $after) {
 			$match.Parent.InsertAfterChild($newImport, $match)
 		}
 	}
-    $buildProject.Save()
+    $msbuildProject.Save()
 }
 
 function Reload-Project($project) {
@@ -143,4 +150,4 @@ function Reload-Project($project) {
 	$(Get-Item $path).LastWriteTime = Get-Date
 }
 
-Export-ModuleMember Deploy-Solution-Folder, Deploy-Solution-File, Add-Solution-Folder, Add-Solution-File, Get-Solution-Dir, Get-Solution-Name, Create-Solution-Folder, Add-MSBuild-Import, Reload-Project
+Export-ModuleMember Deploy-Solution-Folder, Deploy-Solution-File, Add-Solution-Folder, Add-Solution-File, Get-Solution-Dir, Get-Solution-Name, Create-Solution-Folder, Add-MSBuild-Import, Reload-Project, Add-ProjectItemFromFile
