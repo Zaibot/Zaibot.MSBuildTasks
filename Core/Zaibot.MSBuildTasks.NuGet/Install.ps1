@@ -19,13 +19,13 @@ function Add-Default-NuSpec() {
 	# Add default nuget to project.
 	$file = $project.ProjectItems.AddFromFile($nuspecFile).Open()
 	$file.Document.Activate()
-	$file.Document.ReplaceText("`$projectName`$", "$projectName")
+	$file.Document.ReplaceText("`$projectName`$", "$projectName") | Out-Null
 }
 
 function Main 
 {
 	$buildProject = Get-MSBuildProject $project.Name
-  Add-MSBuild-Import $buildProject "`$(SolutionDir)\.build\Zaibot.MSBuildTasks.NuGet.targets"
+	Add-MSBuild-Import $buildProject "`$(SolutionDir)\.build\Zaibot.MSBuildTasks.NuGet.targets"
 	Add-Default-NuSpec
 	Reload-Project $project
 }
