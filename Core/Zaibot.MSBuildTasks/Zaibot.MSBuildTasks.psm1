@@ -140,7 +140,7 @@ function Reload-Project($project) {
 	ElseIf ($project.FullName) { $path = $project.FullName }
 	ElseIf ($project.FullPath) { $path = $project.FullPath }
 
-	$(get-item function).lastwritetime=get-date
+	$(Get-Item $path).LastWriteTime = Get-Date
 }
 
 Export-ModuleMember Deploy-Solution-Folder, Deploy-Solution-File, Add-Solution-Folder, Add-Solution-File, Get-Solution-Dir, Get-Solution-Name, Create-Solution-Folder, Add-MSBuild-Import, Reload-Project
