@@ -37,7 +37,7 @@ function Main
 	$solutionName = Get-Solution-Name $solution
 	$solutionDir = Get-Solution-Dir $solution
 	$buildProject = Get-MSBuildProject $project.Name
-    Add-MSBuild-Import($buildProject, "`$(SolutionDir)\.build\Zaibot.MSBuildTasks.GitVersion.targets")
+    Add-MSBuild-Import $buildProject "`$(SolutionDir)\.build\Zaibot.MSBuildTasks.GitVersion.targets"
     
 	$solProdFile = Join-Path $solutionDir ("Includes\$solutionName" + "_Product.cs")
 	$solVerFile = Join-Path $solutionDir ("Includes\$solutionName" + "_Version.cs")

@@ -136,11 +136,11 @@ function Add-MSBuild-Import($msbuildProject, $path, $after) {
 
 function Reload-Project($project) {
 	$path = '?'
-	if (Test-Path $project) { $path = $project }
-	elif ($project.FullName) { $path = $project.FullName }
-	elif ($project.FullPath) { $path = $project.FullPath }
+	If (Test-Path $project) { $path = $project }
+	ElseIf ($project.FullName) { $path = $project.FullName }
+	ElseIf ($project.FullPath) { $path = $project.FullPath }
 
-	$(get-item function).lastwritetime=get-date
+	$(Get-Item $path).LastWriteTime = Get-Date
 }
 
 Export-ModuleMember Deploy-Solution-Folder, Deploy-Solution-File, Add-Solution-Folder, Add-Solution-File, Get-Solution-Dir, Get-Solution-Name, Create-Solution-Folder, Add-MSBuild-Import, Reload-Project

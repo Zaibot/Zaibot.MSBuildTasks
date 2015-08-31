@@ -25,7 +25,7 @@ function Add-Default-NuSpec() {
 function Main 
 {
 	$buildProject = Get-MSBuildProject $project.Name
-    Add-MSBuild-Import($buildProject, "`$(SolutionDir)\.build\Zaibot.MSBuildTasks.NuGet.targets")
+  Add-MSBuild-Import $buildProject "`$(SolutionDir)\.build\Zaibot.MSBuildTasks.NuGet.targets"
 	Add-Default-NuSpec
 	Reload-Project $project
 }
