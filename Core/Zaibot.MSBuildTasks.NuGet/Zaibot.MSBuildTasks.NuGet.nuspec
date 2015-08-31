@@ -12,7 +12,7 @@
     <projectUrl>https://github.com/Zaibot/Zaibot.MSBuildTasks/</projectUrl>
     <licenseUrl>https://github.com/Zaibot/Zaibot.MSBuildTasks/blob/master/LICENSE.md</licenseUrl>
     <dependencies>
-      <dependency id="Zaibot.MSBuildTasks" />
+      <dependency id="Zaibot.MSBuildTasks" version="$version$" />
     </dependencies>
   </metadata>
   <files>
