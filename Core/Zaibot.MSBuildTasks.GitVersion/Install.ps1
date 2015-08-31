@@ -17,8 +17,7 @@ function Add-Solution-ProductVersionInclude($solution, $project, $solProdFile, $
 
 	$assemblyVersionFile = $propertiesItems.Item("AssemblyInfo.cs")
 	if ($assemblyVersionFile) { 
-		$assemblyInfo = $assemblyVersionFile.Open()
-		Open-AssemblyInfo-ForEdit($assemblyInfo)
+		Open-AssemblyInfo-ForEdit($assemblyVersionFile)
 	}
 }
 
