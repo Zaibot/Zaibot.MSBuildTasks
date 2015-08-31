@@ -138,7 +138,7 @@ function Add-MSBuild-Import($msbuildProject, $path, $after) {
 			$match.Parent.InsertAfterChild($newImport, $match)
 		}
 	}
-    $buildProject.Save()
+    $msbuildProject.Save()
 }
 
 function Reload-Project($project) {
