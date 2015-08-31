@@ -1,9 +1,9 @@
 ﻿// ----------------------------------------
 // 
-//   Core
+//   MSBuildTasks
 //   Copyright (c) 2015 Zaibot Programs
 //   
-//   Creation: 2015-07-12
+//   Creation: 2015-08-30
 //     Author: Tobias de Groen
 //   Location: Arnhem, The Netherlands
 // 
@@ -13,7 +13,6 @@
 // 
 // ----------------------------------------
 
-using System;
 using System.IO;
 using System.Threading;
 using Microsoft.Build.Utilities;
@@ -35,16 +34,16 @@ namespace Zaibot.MSBuildTasks
                 + "[assembly: AssemblyFileVersion(\"{1}\")]\r\n"
                 + "[assembly: AssemblyInformationalVersion(\"{2}\")]\r\n";
 
-            var assVersion = Version;
-            var assFileVersion = FileVersion;
-            var assInfoVersion = InfoVersion;
+            var assVersion = this.Version;
+            var assFileVersion = this.FileVersion;
+            var assInfoVersion = this.InfoVersion;
 
             var retries = 50;
             while (retries-- > 0)
             {
                 try
                 {
-                    using (var fs = new FileStream(File, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+                    using (var fs = new FileStream(this.File, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
                     using (var sw = new StreamWriter(fs))
                     {
                         sw.Write(format, assVersion, assFileVersion, assInfoVersion);

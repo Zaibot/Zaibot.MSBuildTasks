@@ -24,8 +24,7 @@ function Main
 	Deploy-Solution-Folder "Zaibot.MSBuildTasks" $toolsPath $solution $includesFolderName $includeFiles
 	Add-Solution-Folder "Zaibot.MSBuildTasks" $toolsPath $solution $includesFolderName $includeFiles
 	
-	$buildProject = Get-MSBuildProject $project.Name
-	Add-MSBuild-Import $buildProject "`$(SolutionDir)$buildFolderName\Zaibot.MSBuildTasks.targets"
+	Get-Project | %{ Add-MSBuild-Import $(Get-MSBuildProject $_.Name) "`$(SolutionDir)$buildFolderName\Zaibot.MSBuildTasks.targets" } | Out-Null
 }
 
 Main
