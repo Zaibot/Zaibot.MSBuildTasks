@@ -52,6 +52,7 @@
     <Compile Include="..\Includes\MSBuildTasks_Version.cs">
       <Link>Properties\MSBuildTasks_Version.cs</Link>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WriteAssemblyVersionFileTask.cs" />
     <Compile Include="GitCurrentBranchTask.cs" />
     <Compile Include="GitDescribeTagTask.cs" />
@@ -61,7 +62,6 @@
     <Compile Include="GitToolBase.cs" />
     <Compile Include="GitToolCommitCountTask.cs" />
     <Compile Include="GitVersionTagTask.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolPathUtil.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,13 +98,6 @@
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.GitVersion.targets" />
   <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.NuGet.targets" />
-  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
-  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.GitVersion.targets" />
-  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
-  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.GitVersion.targets" />
-  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
-  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.targets" />
-  <Import Project="$(SolutionDir).build\Zaibot.MSBuildTasks.GitVersion.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
