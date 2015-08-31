@@ -22,7 +22,7 @@ function Add-Solution-Folder($packageName, $packagePath, $solution, $solutionFol
 	$solutionDir     = Get-Solution-Dir $solution
 	$targetPath      = Create-Solution-Directory $solution $solutionFolderName
 	$solutionFolder  = Create-Solution-Folder $solution $solutionFolderName
-	$projectItems    = Get-Interface $solutionFolder.ProjectItems ([EnvDTE.ProjectItems])
+	$projectItems    = $solutionFolder.ProjectItems
 
 	$files | ForEach { (Add-Tool-File $projectItems $targetPath $_) }
 }
@@ -32,7 +32,7 @@ function Add-Solution-File($packageName, $packagePath, $solution, $solutionFolde
 	$solutionDir     = Get-Solution-Dir $solution
 	$targetPath      = Join-Path $solutionDir $solutionFolderName
 	$solutionFolder  = Create-Solution-Folder $solution $solutionFolderName
-	$projectItems    = Get-Interface $solutionFolder.ProjectItems ([EnvDTE.ProjectItems])
+	$projectItems    = $solutionFolder.ProjectItems
 
 	Add-Tool-File $projectItems $targetPath $fileName
 }
@@ -71,9 +71,14 @@ Function Copy-Tool-File($sourceFolder, $targetFolder, $filename) {
 
 Function Add-Tool-File($projectItems, $targetFolder, $filename) {
 	Write-Host "Add-Tool-File"
-	$targetsPath = Join-Path $targetFolder $filename
-	Write-Host "Adding $targetsPath"
-	$projectItems.AddFromFile($targetsPath) | Out-Null
+	$exists = !!($projectItems | Where { $_.Name -eq $filename })
+	if (!$exists) {
+		$targetsPath = Join-Path $targetFolder $filename
+		Write-Host "Adding $targetsPath"
+		$projectItems.AddFromFile($targetsPath) | Out-Null
+	} else {
+		Write-Host "Skipping $targetsPath"
+	}
 }
 
 function Get-Solution-Dir($solution) {
@@ -102,13 +107,40 @@ function Get-Solution-Name($solution) {
     }
 }
 
-function Add-MSBuild-Import($msbuildProject, $path) {
-	Write-Host "Add-MSBuild-Import"
-    $import = $msbuildProject.Xml.Imports | Where { $_.Project -eq $path }
-    if ($import) {
-        $import = $msbuildProject.Xml.AddImport($path)
-        $buildProject.Save() | Out-Null
-    }
+function Search-Import($imports, $name) {
+	$imports | ?{ $_.Project -eq $name }
+}
+function Search-First-Import($imports, $name) {
+	$imports | ?{ $_.Project -eq $name } | Select-Object -First 1
+}
+function Remove-Import($which) {
+	$which | % { $_.Parent.RemoveChild($_) }
 }
 
-Export-ModuleMember Deploy-Solution-Folder, Deploy-Solution-File, Add-Solution-Folder, Add-Solution-File, Get-Solution-Dir, Get-Solution-Name, Create-Solution-Folder, Add-MSBuild-Import
+function Add-MSBuild-Import($msbuildProject, $path, $after) {
+	Write-Host "Add-MSBuild-Import"
+    $import = Search-Import $msbuildProject.Xml.Imports $path
+	if ($import) {
+		Remove-Import $import
+	}
+    $newImport = $msbuildProject.Xml.AddImport($path)
+	if ($after) {
+		$match = $after | %{ Search-First-Import $msbuildProject.Xml.Imports $_ } | ?{ !!$_ } | Select-Object -First 1
+		if ($match) {
+			$newImport.Parent.RemoveChild($newImport)
+			$match.Parent.InsertAfterChild($newImport, $match)
+		}
+	}
+    $buildProject.Save() | Out-Null
+}
+
+function Reload-Project($project) {
+	$path = '?'
+	if (Test-Path $project) { $path = $project }
+	elif ($project.FullName) { $path = $project.FullName }
+	elif ($project.FullPath) { $path = $project.FullPath }
+
+	$(get-item function).lastwritetime=get-date
+}
+
+Export-ModuleMember Deploy-Solution-Folder, Deploy-Solution-File, Add-Solution-Folder, Add-Solution-File, Get-Solution-Dir, Get-Solution-Name, Create-Solution-Folder, Add-MSBuild-Import, Reload-Project
