@@ -27,8 +27,8 @@ function Main
 	Deploy-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $includeFiles
 	Add-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $includeFiles
 	
-	Deploy-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName "ProductName_Product.cs" $fileProduct
-	Add-Solution-Folder "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $fileProduct
+	Deploy-Solution-File "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName "ProductName_Product.cs" $fileProduct
+	Add-Solution-File "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $fileProduct
 
 	Deploy-Solution-File "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName "ProductName_Version.cs" $fileVersion
 	Add-Solution-File "Zaibot.MSBuildTasks.GitVersion" $toolsPath $solution $includesFolderName $fileVersion
