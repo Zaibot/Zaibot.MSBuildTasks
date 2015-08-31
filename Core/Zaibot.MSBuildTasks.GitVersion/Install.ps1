@@ -43,6 +43,7 @@ function Main
 	$solVerFile = Join-Path $solutionDir ("Includes\$solutionName" + "_Version.cs")
 
 	Add-Solution-ProductVersionInclude $solution $project $solProdFile $solVerFile
+	Reload-Project $buildProject
 }
 
 Main
