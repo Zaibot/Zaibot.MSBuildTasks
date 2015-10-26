@@ -16,9 +16,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Init.ps1" target="tools" />
     <file src="Install.ps1" target="tools" />
-    <file src="Uninstall.ps1" target="tools" />
 
     <file src="MSBuild.psm1" target="tools" />
     <file src="Zaibot.MSBuildTasks.psm1" target="tools" />

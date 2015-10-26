@@ -1,6 +1,16 @@
 ﻿param($installPath, $toolsPath, $package, $project)
 
 Import-Module (Join-Path $toolsPath "MSBuild.psm1")
+Import-Module (Join-Path $toolsPath "Zaibot.MSBuildTasks.psm1")
+
+$buildFolderName = ".build"
+$buildFiles = @()
+$buildFiles += "Zaibot.MSBuildTasks.NuGet.targets";
+$buildFiles += "Zaibot.MSBuildTasks.NuGet.Readme.txt";
+
+$includesFolderName = "Includes"
+$includeFiles = @()
+$includeFiles += "Zaibot.MSBuildTasks.NuGet.props"
 
 function Add-Default-NuSpec() {
 	$projectDir = Split-Path $project.FileName;
@@ -25,6 +35,14 @@ function Add-Default-NuSpec() {
 
 function Main 
 {
+	$solution = Get-Interface $dte.Solution ([EnvDTE80.Solution2])
+
+	Deploy-Solution-Folder "Zaibot.MSBuildTasks.NuGet" $toolsPath $solution $buildFolderName $buildFiles
+	Add-Solution-Folder "Zaibot.MSBuildTasks.NuGet" $toolsPath $solution $buildFolderName $buildFiles
+
+	Deploy-Solution-Folder "Zaibot.MSBuildTasks.NuGet" $toolsPath $solution $includesFolderName $includeFiles
+	Add-Solution-Folder "Zaibot.MSBuildTasks.NuGet" $toolsPath $solution $includesFolderName $includeFiles
+
 	$buildProject = Get-MSBuildProject $project.Name
 	Add-MSBuild-Import $buildProject "`$(SolutionDir)\.build\Zaibot.MSBuildTasks.NuGet.targets"
 	Add-Default-NuSpec
