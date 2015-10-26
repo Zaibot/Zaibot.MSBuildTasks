@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F55F1D
 	ProjectSection(SolutionItems) = preProject
 		.build\Zaibot.MSBuildTasks.dll = .build\Zaibot.MSBuildTasks.dll
 		.build\Zaibot.MSBuildTasks.GitVersion.dll = .build\Zaibot.MSBuildTasks.GitVersion.dll
+		.build\Zaibot.MSBuildTasks.GitVersion.Readme.txt = .build\Zaibot.MSBuildTasks.GitVersion.Readme.txt
 		.build\Zaibot.MSBuildTasks.GitVersion.targets = .build\Zaibot.MSBuildTasks.GitVersion.targets
 		.build\Zaibot.MSBuildTasks.NuGet.Readme.txt = .build\Zaibot.MSBuildTasks.NuGet.Readme.txt
 		.build\Zaibot.MSBuildTasks.NuGet.targets = .build\Zaibot.MSBuildTasks.NuGet.targets
